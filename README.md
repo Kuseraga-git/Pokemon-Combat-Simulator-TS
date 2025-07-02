@@ -38,7 +38,7 @@ Player can :
 ### What's to come ?
 
 - Manage IV and EV of pokemons
-- Menue before battle
+- Menu before battle
   - Select Team1 and Team2
-  - Create new Pokémons in the menue
+  - Create new Pokémons in the menu
 - Nature and Talent management
