@@ -22,3 +22,23 @@ Your app is ready to be deployed!
 ### Q: What about Eject?
 
 No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+
+## Features
+
+Personnal projet to recreate a fully operationnal Pokemon Combat Simulator in typescript.
+
+Make two teams battle using their own Pokémons and their specific moves to win against their opponent.
+
+Player can :
+- Choise between the 4 moves of his Pokémon
+- Switch his current Pokémon with an other in his team
+- Put KO his opponent's Pokémon
+- Do a full cycle of Pokémon turn based combat til victory or loose
+
+### What's to come ?
+
+- Manage IV and EV of pokemons
+- Menue before battle
+  - Select Team1 and Team2
+  - Create new Pokémons in the menue
+- Nature and Talent management
