@@ -1,8 +1,8 @@
 import { Pokemon } from "../classes/Pokemon";
 import { Game } from "../classes/Game";
 import { Teams } from "../classes/Teams";
-import { MoveName } from "../Types";
-import { GetMove } from "../data/Moves";
+import { MoveName, TMoves } from "../Types";
+import { Move, Moves } from "../data/Moves";
 import { Statut, StatutEnum } from "../data/Statuts";
 
 export function ResetTextArea() {
@@ -89,18 +89,18 @@ export function CreatePokemonCard(Pokemon : Pokemon, Index : number, Team : Team
                 <img class="Team_Type" src="./assets/Types/Type_${Pokemon.getPokemonTypes()[1]}.png"/>
                 <p class="card-text-mini"><img id="equipe${IndexTeam}-${Index}-statut" class="statut-box" src="${Statut[Pokemon.GetStatut()].Image}"></img></p>
                 <ul>
-                    <li class="list_Capa_mini"><div class="capa_mini ${GetMove(Pokemon.GetMoves()[0]).Type}">${GetMove(Pokemon.GetMoves()[0]).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'0'}">${Pokemon.GetMovePP(0)}</span>/${GetMove(Pokemon.GetMoves()[0]).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${GetMove(Pokemon.GetMoves()[0]).Cat}.png"/></div></li>
-                    <li class="list_Capa_mini"><div class="capa_mini ${GetMove(Pokemon.GetMoves()[1]).Type}">${GetMove(Pokemon.GetMoves()[1]).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'1'}">${Pokemon.GetMovePP(1)}</span>/${GetMove(Pokemon.GetMoves()[1]).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${GetMove(Pokemon.GetMoves()[1]).Cat}.png"/></div></li>
-                    <li class="list_Capa_mini"><div class="capa_mini ${GetMove(Pokemon.GetMoves()[2]).Type}">${GetMove(Pokemon.GetMoves()[2]).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'2'}">${Pokemon.GetMovePP(2)}</span>/${GetMove(Pokemon.GetMoves()[2]).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${GetMove(Pokemon.GetMoves()[2]).Cat}.png"/></div></li>
-                    <li class="list_Capa_mini"><div class="capa_mini ${GetMove(Pokemon.GetMoves()[3]).Type}">${GetMove(Pokemon.GetMoves()[3]).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'3'}">${Pokemon.GetMovePP(3)}</span>/${GetMove(Pokemon.GetMoves()[3]).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${GetMove(Pokemon.GetMoves()[3]).Cat}.png"/></div></li>
+                    <li class="list_Capa_mini"><div class="capa_mini ${Pokemon.GetMove(0).Type}">${Pokemon.GetMove(0).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'0'}">${Pokemon.GetMovePP(0)}</span>/${Pokemon.GetMove(0).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${Pokemon.GetMove(0).Cat}.png"/></div></li>
+                    <li class="list_Capa_mini"><div class="capa_mini ${Pokemon.GetMove(1).Type}">${Pokemon.GetMove(1).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'1'}">${Pokemon.GetMovePP(1)}</span>/${Pokemon.GetMove(0).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${Pokemon.GetMove(1).Cat}.png"/></div></li>
+                    <li class="list_Capa_mini"><div class="capa_mini ${Pokemon.GetMove(2).Type}">${Pokemon.GetMove(2).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'2'}">${Pokemon.GetMovePP(2)}</span>/${Pokemon.GetMove(0).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${Pokemon.GetMove(2).Cat}.png"/></div></li>
+                    <li class="list_Capa_mini"><div class="capa_mini ${Pokemon.GetMove(3).Type}">${Pokemon.GetMove(3).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'3'}">${Pokemon.GetMovePP(3)}</span>/${Pokemon.GetMove(0).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${Pokemon.GetMove(3).Cat}.png"/></div></li>
                 </ul>
             </div>
         </button>
     `)
 }
 
-export function CreatePokemonMove(Move : MoveName, PP : number, Index : number) : string {
-    return `<li class="list_Capa"><button class="capa ${GetMove(Move).Type}">${GetMove(Move).Name} <span class="PP_Capa"><span id="PPCapa${Index}">${PP}</span>/${GetMove(Move).PP}</span><img class="cat_Capa" src="./assets/Utils/${GetMove(Move).Cat}.png"/></button></li>`;
+export function CreatePokemonMove(Move : Move, PP : number, Index : number) : string {
+    return `<li class="list_Capa"><button class="capa ${Move.Type}">${Move.Name} <span class="PP_Capa"><span id="PPCapa${Index}">${PP}</span>/${Move.PP}</span><img class="cat_Capa" src="./assets/Utils/${Move.Cat}.png"/></button></li>`;
 }
 
 export function CreateStatutTeam2(Pokemon : Pokemon, Index : number) {

@@ -14,10 +14,6 @@ export interface Move {
     Effect : (GameInstance : Game, Target : Pokemon, Sender : Pokemon) => void
 }
 
-export function GetMove(moveName : MoveName) : Move {
-        return Moves[moveName]
-    }
-
 export const Moves: TMoves = {
   ELECTACLE: {
     Name: "Electacle",

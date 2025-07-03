@@ -1,5 +1,5 @@
 import { StatsChanges } from "../data/StatsChanges"
-import { GetMove, Move } from "../data/Moves"
+import { Move } from "../data/Moves"
 import { Pokedex } from "../data/Pokedex"
 import { Pokemon_Types } from "../data/Pokemon_Types"
 import { StatutEnum } from "../data/Statuts"
@@ -138,13 +138,10 @@ export class Pokemon {
             console.log("Invalid move index!");
             return false;
         }
-
         if (this.PP[MoveIndex] <= 0) {
             console.log("No PP left for this move!");
             return false;
         }
-        
-        // const move = GetMove(this.Moves[MoveIndex])
         this.Moves[MoveIndex].Effect(GameInstance, Target, this)
         this.PP[MoveIndex]--
         this.FormatKO()
