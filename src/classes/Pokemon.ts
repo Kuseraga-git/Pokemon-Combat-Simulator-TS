@@ -33,7 +33,7 @@ export class Pokemon {
     private Confusion : boolean = false
     private ConfusionTurn : number = 0
     private Fear : boolean = false
-    private Moves : MoveName[]
+    private Moves : Move[]
     private PP : number[]
     private readonly Image : string
 
@@ -50,7 +50,7 @@ export class Pokemon {
         this.SpeDef = pokemonData.SpeDef
         this.Speed = pokemonData.Speed
         this.Moves = pokemonData.Moves
-        this.PP = this.Moves.map(moveName => GetMove(moveName).PP);
+        this.PP = this.Moves.map(move => move.PP);
         this.Image = pokemonData.Image
     }
 
@@ -144,20 +144,20 @@ export class Pokemon {
             return false;
         }
         
-        const move = GetMove(this.Moves[MoveIndex])
-        move.Effect(GameInstance, Target, this)
+        // const move = GetMove(this.Moves[MoveIndex])
+        this.Moves[MoveIndex].Effect(GameInstance, Target, this)
         this.PP[MoveIndex]--
         this.FormatKO()
         Target.FormatKO()
         return true
     }
 
-    GetMoves() : MoveName[] {
+    GetMoves() : Move[] {
         return(this.Moves)
     }
 
     GetMove(MoveIndex : number) : Move {
-        return(GetMove(this.Moves[MoveIndex]))
+        return(this.Moves[MoveIndex])
     }
 
     GetStatValue(StatName : string) : number{

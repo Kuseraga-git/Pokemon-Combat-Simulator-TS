@@ -2,40 +2,40 @@ import { Pokemon } from "../classes/Pokemon";
 import { Game } from "../classes/Game";
 import { Pokemon_Types } from "../data/Pokemon_Types";
 import { Weather } from "../data/Weather";
+import { WriteInTextArea } from "./Display";
 
 export function WeatherDamage(GameInstance : Game, Pokemon1 : Pokemon, Pokemon2 : Pokemon) {
     if (GameInstance.GetWeatherTurn() > 0) {
         const SandRes : Pokemon_Types[] = [Pokemon_Types.ROCK, Pokemon_Types.STEEL, Pokemon_Types.GROUND]
         if (GameInstance.GetWeather() === Weather.SANDSTORM) {
             if (!(SandRes.includes(Pokemon1.getPokemonTypes()[0] || SandRes.includes(Pokemon1.getPokemonTypes()[1])))) {
-                // ecrire_dans_Zone_de_Texte(`${pokemon1.nom} subit des dégats de la tempête de sable !`)
+                WriteInTextArea(`${Pokemon1.GetName()} takes damages from Sandstorm !`)
                 Pokemon1.SetLP(Pokemon1.GetLP() - Math.floor(Pokemon1.GetLP() * 1/16))
             }
             if (!(SandRes.includes(Pokemon2.getPokemonTypes()[0] || SandRes.includes(Pokemon2.getPokemonTypes()[1])))) {
-                // ecrire_dans_Zone_de_Texte(`${pokemon1.nom} subit des dégats de la tempête de sable !`)
+                WriteInTextArea(`${Pokemon2.GetName()} takes damages from Sandstorm !`)
                 Pokemon2.SetLP(Pokemon2.GetLP() - Math.floor(Pokemon2.GetLP() * 1/16))
             }
         }
         if (GameInstance.GetWeather() === Weather.HAIL) {
             if (Pokemon1.getPokemonTypes()[0] !== Pokemon_Types.ICE || Pokemon1.getPokemonTypes()[1] !== Pokemon_Types.ICE) {
-                // ecrire_dans_Zone_de_Texte(`${pokemon1.nom} subit des dégats de la grèle !`)
+                WriteInTextArea(`${Pokemon1.GetName()} takes damages from Hail !`)
                 Pokemon1.SetLP(Pokemon1.GetLP() - Math.floor(Pokemon1.GetLP() * 1/16))
             }
             if (Pokemon2.getPokemonTypes()[0] !== Pokemon_Types.ICE || Pokemon2.getPokemonTypes()[1] !== Pokemon_Types.ICE) {
-                // ecrire_dans_Zone_de_Texte(`${pokemon1.nom} subit des dégats de la grèle !`)
+                WriteInTextArea(`${Pokemon2.GetName()} takes damages from Hail !`)
                 Pokemon2.SetLP(Pokemon2.GetLP() - Math.floor(Pokemon2.GetLP() * 1/16))
             }
         }
         GameInstance.SetWeatherTurn(GameInstance.GetWeatherTurn() - 1)
     } else if (GameInstance.GetWeather() !== Weather.None) {
-        // TODO NeutralWeather(GameInstance)
+        NeutralWeather(GameInstance)
     }
 }
 
 export function NeutralWeather(GameInstance : Game) {
-    // TODO - à compléter
     if (GameInstance.GetWeather() !== Weather.None) {
-        // ecrire_dans_Zone_de_Texte(`La météo redevient calme !`)
+        WriteInTextArea(`The weather turns calm again !`)
         switch (GameInstance.GetWeather()) {
             case Weather.SANDSTORM:
                 RemoveSandstorm(GameInstance);
@@ -46,7 +46,7 @@ export function NeutralWeather(GameInstance : Game) {
             default:
                 break;
         }
-        //document.getElementById("meteo").src = "";
+        (document.getElementById("meteo") as HTMLImageElement).src = ""
         GameInstance.SetWeather(Weather.None)
         GameInstance.SetWeatherTurn(0)
     }

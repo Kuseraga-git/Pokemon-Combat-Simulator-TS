@@ -22,8 +22,8 @@ export class Teams {
 
     CreateTeamRed() {
         this.pokemons.push(new Pokemon("PIKACHU"))
-        this.pokemons.push(new Pokemon("FLORIZARRE"))
-        this.pokemons.push(new Pokemon("LOKHLASS"))
+        this.pokemons.push(new Pokemon("VENUSAURE"))
+        this.pokemons.push(new Pokemon("LAPRAS"))
         console.log("Team Red has been created !")
     }
 
