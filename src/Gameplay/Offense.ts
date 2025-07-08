@@ -1,5 +1,4 @@
 import { Pokemon } from "../classes/Pokemon";
-import { Category } from "../data/Category";
 import { CritChanges } from "../data/Crits";
 import { ProbabilityCheck } from "./Utils";
 import { Pokemon_Types } from "../data/Pokemon_Types";
@@ -12,37 +11,37 @@ import { ComputeConfusionDamage } from "./Alteration";
 import { WriteInTextArea } from "./Display";
 import { Weather } from "../data/Weather";
 
-export function ComputeDamages(Cat : Category, Target : Pokemon, Sender : Pokemon, Power : number, AttackType : Pokemon_Types, CritChance : number, CurrentWeather : Weather) : DamageIsCrit {
+export function ComputeDamages(Move : Move, Target : Pokemon, Sender : Pokemon, CritChance : number, CurrentWeather : Weather) : DamageIsCrit {
     switch (CurrentWeather) {
         case Weather.SUN:
-            if (AttackType === Pokemon_Types.FIRE) { // TODO : OR AttackName === Hydro Steam
-                Power = Power * 1.5
-            } else if (AttackType === Pokemon_Types.WATER) {
-                Power = Power * 0.5
+            if (Move.Type === Pokemon_Types.FIRE || Move == Moves.HYDRO_STEAM) {
+                Move.Power = Move.Power! * 1.5
+            } else if (Move.Type === Pokemon_Types.WATER) {
+                Move.Power = Move.Power! * 0.5
             }
             break;
         case Weather.RAIN:
-            if (AttackType === Pokemon_Types.WATER) { 
-                Power = Power * 1.5
-            } else if (AttackType === Pokemon_Types.FIRE) { // TODO : OR AttackName === SolarBeam
-                Power = Power * 0.5
+            if (Move.Type === Pokemon_Types.WATER) { 
+                Move.Power = Move.Power! * 1.5
+            } else if (Move.Type === Pokemon_Types.FIRE) { // TODO : OR AttackName === SolarBeam
+                Move.Power = Move.Power! * 0.5
             }
             break;
         case Weather.HAIL:
-            // If AttackName == Solar Beam --> Power = 60
+            // TODO : If AttackName == Solar Beam --> Power = 60
             break;
         case Weather.SANDSTORM:
-            // If AttackName == Solar Beam --> Power = 60
+            // TODO : If AttackName == Solar Beam --> Power = 60
             break;
         default:
             break;
     }
-    switch (Cat) {
+    switch (Move.Cat) {
         case "PHYSICAL":
-            return ComputePhysicalDamages(Target, Sender, Power, AttackType, CritChance)
+            return ComputePhysicalDamages(Target, Sender, Move.Power!, Move.Type, CritChance)
             break;
         case "SPECIAL": 
-            return ComputeSpecialDamages(Target, Sender, Power, AttackType, CritChance)
+            return ComputeSpecialDamages(Target, Sender, Move.Power!, Move.Type, CritChance)
             break;
         default:
             return({Damage : 0, Crit : false})
@@ -90,7 +89,7 @@ export function CanAttack(GameInstance : Game, Sender : Pokemon, Move : Move, Ta
         if (Sender.GetStatut() === StatutEnum.None && Sender.GetConfusion() === false && Sender.GetFear() === false) {
             return(true)
         } else if (Sender.GetStatut() === StatutEnum.FREEZE) {
-            if (Move.Type === Pokemon_Types.FIRE || ProbabilityCheck(20)) {
+            if (Move.Type === Pokemon_Types.FIRE || Move.Name == 'Hydro Steam' || ProbabilityCheck(20)) {
                 WriteInTextArea(`${Sender.GetName()} thawed out !`)
                 Sender.SetStatut(StatutEnum.None)
                 return(true)
@@ -133,7 +132,7 @@ export function CanAttack(GameInstance : Game, Sender : Pokemon, Move : Move, Ta
     } else {
         if (Sender.GetMovePP(0) <= 0 && Sender.GetMovePP(1) <= 0 && Sender.GetMovePP(2) <= 0 && Sender.GetMovePP(3) <= 0) {
             WriteInTextArea(`${Sender.GetName()} has no moves left !`)
-            Moves.LUTTE.Effect(GameInstance, Target, Sender)
+            Moves.STRUGGLE.Effect(GameInstance, Target, Sender)
         } else {
             WriteInTextArea(`${Sender.GetName()} try to use ${Move.Name} but there's no PP left for this move !`)
         }

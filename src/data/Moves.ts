@@ -33,7 +33,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         DrawbackDamage(Sender, dmg.Damage, 0.3)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
@@ -54,7 +54,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'Att')
@@ -74,7 +74,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           // TODO Remove Screen
@@ -94,7 +94,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           DownLevelStat(Target, 'Def')
@@ -114,7 +114,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (dmg.Damage > 0) {
           HealLP(Sender, dmg.Damage / 2)
@@ -134,7 +134,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
@@ -151,7 +151,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyStatut(Target, StatutEnum.POISONED)
@@ -171,7 +171,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         DownLevelStat(Sender, 'SpeAtt')
         DownLevelStat(Sender, 'SpeAtt')
@@ -190,7 +190,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
@@ -207,7 +207,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (GameInstance.GetWeather() == Weather.HAIL || AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.FREEZE)
@@ -227,7 +227,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
@@ -247,7 +247,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (ProbabilityCheck(10)){
           UpLevelStat(Sender, 'Att')
@@ -271,7 +271,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.BURN)
@@ -291,7 +291,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (GameInstance.GetWeather() == Weather.RAIN || AccuracyCheck(GameInstance.GetWeather() === Weather.SUN ? 50 : this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyConfusion(Target)
@@ -311,7 +311,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
@@ -328,7 +328,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
@@ -348,7 +348,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
@@ -365,7 +365,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         DrawbackDamage(Sender, dmg.Damage, 0.3)
       } else {
@@ -383,7 +383,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyFear(Target)
@@ -403,7 +403,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
@@ -420,7 +420,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
@@ -440,7 +440,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.FREEZE)
@@ -459,7 +459,7 @@ export const Moves: TMoves = {
     PP: 20,
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
-      let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+      let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
       InflictDamage(Target, dmg.Damage)
     },
   },
@@ -473,7 +473,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           DownLevelStat(Target, 'SpeAtt')
@@ -493,7 +493,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
           switch (Math.floor(Math.random() * 3)) {
@@ -525,7 +525,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.BURN)
@@ -545,7 +545,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
@@ -565,7 +565,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
           ApplyFear(Target)
@@ -585,7 +585,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
           DownLevelStat(Target, 'SpeDef')
@@ -605,7 +605,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
@@ -625,7 +625,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.BURN)
@@ -645,7 +645,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
@@ -665,7 +665,7 @@ export const Moves: TMoves = {
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
       if (AccuracyCheck(this.Accuracy!, Sender)) {
-        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
@@ -675,8 +675,25 @@ export const Moves: TMoves = {
       }
     },
   },
-  LUTTE: {
-    Name: "Lutte",
+  HYDRO_STEAM: {
+    Name: "Hydro Steam",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.WATER,
+    Power: 80,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  STRUGGLE: {
+    Name: "Struggle",
     Cat: Category.PHYSIQUE,
     Type: Pokemon_Types.NORMAL,
     Power: 50,
@@ -684,7 +701,7 @@ export const Moves: TMoves = {
     PP: 1000,
     Effect(GameInstance, Target, Sender) {
       WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
-      let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+      let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
       InflictDamage(Target, dmg.Damage)
       DrawbackDamage(Sender, Sender.GetMaxLP(), 0.25)
     },
