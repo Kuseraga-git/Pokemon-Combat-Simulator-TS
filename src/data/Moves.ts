@@ -919,6 +919,62 @@ export const Moves: TMoves = {
       }
     },
   },
+  MEGA_KICK: {
+    Name: "Mega Kick",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 120,
+    Accuracy: 75,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  SUPERPOWER: {
+    Name: "Superpower",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.COMBAT,
+    Power: 120,
+    Accuracy: 100,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'Att')
+        DownLevelStat(Sender, 'Def')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  THUNDER: {
+    Name: "Thunder",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.ELECTRICK,
+    Power: 110,
+    Accuracy: 70,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (GameInstance.GetWeather() == Weather.RAIN || AccuracyCheck(GameInstance.GetWeather() == Weather.SUN ? 50 : this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          ApplyStatut(Target, StatutEnum.PARALYZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
   STRUGGLE: {
     Name: "Struggle",
     Cat: Category.PHYSIQUE,
