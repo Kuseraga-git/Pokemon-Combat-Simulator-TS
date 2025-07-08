@@ -52,6 +52,14 @@ export function DisplayTeam1(GameInstance : Game, Team : Teams) {
         const pokemonCard = CreatePokemonCard(pokemon, pkmIndex, Team, 1)
         teamContainer.innerHTML += pokemonCard
     })
+    const pokemonCards : NodeListOf<Element>= document.querySelectorAll(".equipe1-pokemon-card")
+    for (const [index, element] of pokemonCards.entries()) {
+        element.addEventListener("click", function(event) {
+            document.getElementById("capa-list1")!.innerHTML = ''
+            GameInstance.CombatAction(4, index)
+            DisplayPokemon1(GameInstance.GetTeams()[0].GetPokemon(GameInstance.GetIndexPokemon1()), GameInstance)
+        })
+    }
 }
 
 export function DisplayTeam2(Team : Teams) {

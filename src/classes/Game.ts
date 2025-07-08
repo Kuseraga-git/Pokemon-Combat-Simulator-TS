@@ -3,7 +3,7 @@ import { Weather } from "../data/Weather";
 import { Pokemon } from "./Pokemon";
 import { Teams } from "./Teams";
 import { EndRound } from "../Gameplay/Utils";
-import { ResetTextArea, WriteInTextArea } from "../Gameplay/Display";
+import { DisplayPokemon2, ResetTextArea, WriteInTextArea } from "../Gameplay/Display";
 
 export class Game {
     private Teams : Teams[]
@@ -53,24 +53,24 @@ export class Game {
     }
 
     CombatAction(Choice1 : number, IndexNewPokemon1 : number = 0) {
-        let pokemon1 : Pokemon = this.Teams[0].pokemons[this.IndexPokemon1]
-        let pokemon2 : Pokemon = this.Teams[1].pokemons[this.IndexPokemon2]
+        let pokemon1 : Pokemon = this.Teams[0].GetPokemon(this.IndexPokemon1)
+        let pokemon2 : Pokemon = this.Teams[1].GetPokemon(this.IndexPokemon2)
         const randValue : number = Math.floor(Math.random() * 4)
 
         if (Choice1 == 4) {
             if (pokemon1.GetKO()) {
-                if (this.Teams[0].pokemons[this.IndexPokemon1].GetKO() === false && IndexNewPokemon1 != this.IndexPokemon1) {
+                if (this.Teams[0].GetPokemon(IndexNewPokemon1).GetKO() === false && IndexNewPokemon1 != this.IndexPokemon1) {
                     pokemon1.SetPoisonTurn(0)
                     this.IndexPokemon1 = IndexNewPokemon1
-                    pokemon1 = this.Teams[0].pokemons[IndexNewPokemon1]
+                    pokemon1 = this.Teams[0].GetPokemon(IndexNewPokemon1)
                     pokemon1.PopInBattle(this)
                 } else {return}
             } else {
-                if (this.Teams[0].pokemons[this.IndexPokemon1].GetKO() === false && IndexNewPokemon1 != this.IndexPokemon1) {
+                if (this.Teams[0].GetPokemon(this.IndexPokemon1).GetKO() === false && IndexNewPokemon1 != this.IndexPokemon1) {
                     this.NewTurn()
                     pokemon1.SetPoisonTurn(0)
                     this.IndexPokemon1 = IndexNewPokemon1
-                    pokemon1 = this.Teams[0].pokemons[IndexNewPokemon1]
+                    pokemon1 = this.Teams[0].GetPokemon(IndexNewPokemon1)
                     pokemon1.PopInBattle(this)
                     if (CanAttack(this, pokemon2, pokemon2.GetMove(randValue), pokemon1, randValue) == true) {
                         pokemon2.UseMove(this, randValue, pokemon1)
@@ -106,7 +106,7 @@ export class Game {
             if (this.Teams[1].CheckTeamKO() === false) {
                 this.IndexPokemon2 += 1
                 pokemon2 = this.Teams[1].pokemons[this.IndexPokemon2]
-                //DisplayPokemon2(pokemon2)
+                DisplayPokemon2(pokemon2)
             } else {
                 setTimeout(alert, 500, `${this.Teams[0].GetTrainer()} Win ! !!!`);
             }

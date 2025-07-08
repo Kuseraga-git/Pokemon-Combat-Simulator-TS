@@ -1,4 +1,5 @@
 import { Pokemon } from "../classes/Pokemon";
+import { WriteInTextArea } from "./Display";
 
 export function ComputeConfusionDamage(Pokemon : Pokemon) {
     let result : number = 40
@@ -16,4 +17,31 @@ export function ComputePoisonDamage(Pokemon : Pokemon) {
     Pokemon.SetPoisonTurn(Pokemon.GetPoisonTurn() + 1)
     let result : number = Math.trunc(Pokemon.GetMaxLP() * (Pokemon.GetPoisonTurn()/16))
     return(result)
+}
+
+export function DownLevelStat(Pokemon : Pokemon, StatName : string) {
+    if (Pokemon.GetStatLevel(StatName) > -6) {
+        WriteInTextArea(`${Pokemon.GetName()}'s ${StatName} fell !`)
+        Pokemon.SetStatLevel(StatName, Pokemon.GetStatLevel(StatName) - 1)
+    } else {
+        WriteInTextArea(`${Pokemon.GetName()}'s ${StatName} won't go any lower !`)
+    }
+}
+
+export function UpLevelStat(Pokemon : Pokemon, StatName : string) {
+    if (Pokemon.GetStatLevel(StatName) < 6) {
+        WriteInTextArea(`${Pokemon.GetName()}'s ${StatName} rose !`)
+        Pokemon.SetStatLevel(StatName, Pokemon.GetStatLevel(StatName) + 1)
+    } else {
+        WriteInTextArea(`${Pokemon.GetName()}'s ${StatName} won't go any higher !`)
+    }
+}
+
+export function HealLP(Pokemon : Pokemon, Value : number) {
+    if (Pokemon.GetLP() + Value > Pokemon.GetMaxLP()) {
+        Pokemon.SetLP(Pokemon.GetMaxLP())
+    } else {
+        Pokemon.SetLP(Math.floor(Pokemon.GetLP() + Value))
+    }
+    WriteInTextArea(`${Pokemon.GetName()} had its HP restored !`)
 }

@@ -18,7 +18,7 @@ export class Pokemon {
     private AttLevel : number = 0
     private Def : number
     private DefLevel : number = 0
-    private readonly SpeAtt : number
+    private SpeAtt : number
     private SpeAttLevel : number = 0
     private SpeDef : number
     private SpeDefLevel : number = 0
@@ -157,6 +157,29 @@ export class Pokemon {
         return(this.Moves[MoveIndex])
     }
 
+    GetRawStat(StatName : string) : number {
+        switch (StatName) {
+            case 'Att':
+                return(this.Att)
+                break;
+            case 'Def':
+                return(this.Def)
+                break;
+            case 'SpeAtt':
+                return(this.SpeAtt)
+                break;
+            case 'SpeDef':
+                return(this.SpeDef)
+                break;
+            case 'Speed':
+                return(this.Speed)
+                break;        
+            default:
+                return NaN
+                break;
+        }
+    }
+
     GetStatValue(StatName : string) : number{
         switch (StatName) {
             case 'Att':
@@ -176,6 +199,28 @@ export class Pokemon {
                 break;        
             default:
                 return NaN
+                break;
+        }
+    }
+
+    SetRawStat(StatName : string, Value : number) {
+        switch (StatName) {
+            case 'Att':
+                this.Att = Value
+                break;
+            case 'Def':
+                this.Def = Value
+                break;
+            case 'SpeAtt':
+                this.SpeAtt = Value
+                break;
+            case 'SpeDef':
+                this.SpeDef = Value
+                break;
+            case 'Speed':
+                this.Speed = Value
+                break;        
+            default:
                 break;
         }
     }
@@ -274,4 +319,19 @@ export class Pokemon {
         }
     }
 
+    GetCritChance() : number {
+        return(this.CritChance)
+    }
+    
+    SetCritChance(Value : number) {
+        this.CritChance = Value
+    }
+
+    GetAccuracyLevel() : number {
+        return(this.AccuracyLevel)
+    }
+
+    SetAccuracyLevel(Value : number) {
+        this.AccuracyLevel = Value
+    }
 }

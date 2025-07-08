@@ -1,8 +1,16 @@
 import { Pokemon } from "../classes/Pokemon"
 import { Game } from "../classes/Game"
-import { MoveName, TMoves } from "../Types"
+import { TMoves } from "../Types"
 import { Category } from "./Category"
 import { Pokemon_Types } from "./Pokemon_Types"
+import { WriteInTextArea } from "../Gameplay/Display"
+import { AccuracyCheck } from "./Accuracy"
+import { ComputeDamages, DrawbackDamage, InflictDamage } from "../Gameplay/Offense"
+import { ProbabilityCheck } from "../Gameplay/Utils"
+import { ApplyConfusion, ApplyFear, ApplyStatut } from "../Gameplay/GStatut"
+import { DownLevelStat, HealLP, UpLevelStat } from "../Gameplay/Alteration"
+import { StatutEnum } from "./Statuts"
+import { Weather } from "./Weather"
 
 export interface Move {
     Name : string
@@ -15,100 +23,161 @@ export interface Move {
 }
 
 export const Moves: TMoves = {
-  ELECTACLE: {
-    Name: "Electacle",
+  VOLT_TACKLE: {
+    Name: "Volt Tackle",
     Cat: Category.PHYSIQUE,
     Type: Pokemon_Types.ELECTRICK,
     Power: 120,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DrawbackDamage(Sender, dmg.Damage, 0.3)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.PARALYZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  CALINERIE: {
-    Name: "Câlinerie",
+  PLAY_ROUGH: {
+    Name: "Play Rough",
     Cat: Category.PHYSIQUE,
     Type: Pokemon_Types.FAIRY,
     Power: 90,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Câlinerie: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          DownLevelStat(Target, 'Att')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  CASSE_BRIQUE: {
-    Name: "Casse-Brique",
+  BRICK_BREAK: {
+    Name: "Brick Break",
     Cat: Category.PHYSIQUE,
     Type: Pokemon_Types.COMBAT,
     Power: 75,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Casse brique: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          // TODO Remove Screen
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  QUEUE_DE_FER: {
-    Name: "Queue de Fer",
+  IRON_TAIL: {
+    Name: "Iron Tail",
     Cat: Category.PHYSIQUE,
     Type: Pokemon_Types.STEEL,
     Power: 100,
     Accuracy: 75,
     PP: 15,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          DownLevelStat(Target, 'Def')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  MEGA_SANGSUE: {
-    Name: "Méga-Sangsue",
+  GIGA_DRAIN: {
+    Name: "Giga Drain",
     Cat: Category.SPECIAL,
     Type: Pokemon_Types.GRASS,
     Power: 75,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (dmg.Damage > 0) {
+          HealLP(Sender, dmg.Damage / 2)
+        } 
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  SEISME: {
-    Name: "Séisme",
+  EARTHQUAKE: {
+    Name: "Earthquake",
     Cat: Category.PHYSIQUE,
-    Type: Pokemon_Types.GROUND, // Should be GROUND type when you add it
+    Type: Pokemon_Types.GROUND,
     Power: 100,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  BOMB_BEURK: {
-    Name: "Bomb-Beurk",
+  SLUDGE_BOMB: {
+    Name: "Sludge Bomb",
     Cat: Category.SPECIAL,
     Type: Pokemon_Types.POISON,
     Power: 90,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          ApplyStatut(Target, StatutEnum.POISONED)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  TEMPETE_VERTE: {
-    Name: "Tempête Verte",
+  LEAF_STORM: {
+    Name: "Leaf Storm",
     Cat: Category.SPECIAL,
     Type: Pokemon_Types.GRASS,
     Power: 130,
     Accuracy: 90,
     PP: 5,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'SpeAtt')
+        DownLevelStat(Sender, 'SpeAtt')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
   SURF: {
@@ -118,9 +187,14 @@ export const Moves: TMoves = {
     Power: 90,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
   BLIZZARD: {
@@ -130,33 +204,61 @@ export const Moves: TMoves = {
     Power: 110,
     Accuracy: 70,
     PP: 5,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (GameInstance.GetWeather() == Weather.HAIL || AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.FREEZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  PSYKO: {
-    Name: "Psyko",
+  PSYCHIC: {
+    Name: "Psychic",
     Cat: Category.SPECIAL,
     Type: Pokemon_Types.PSY,
     Power: 90,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          DownLevelStat(Target, 'SpeDef')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     }
   },
-  POUVOIR_ANTIQUE: {
-    Name: "Pouvoir Antique",
+  ANCIENT_POWER: {
+    Name: "Ancient Power",
     Cat: Category.SPECIAL,
-    Type: Pokemon_Types.PSY,
+    Type: Pokemon_Types.ROCK,
     Power: 60,
     Accuracy: 100,
     PP: 5,
-    Effect() {
-      console.log("Electacle: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (ProbabilityCheck(10)){
+          UpLevelStat(Sender, 'Att')
+          UpLevelStat(Sender, 'Def')
+          UpLevelStat(Sender, 'SpeAtt')
+          UpLevelStat(Sender, 'SpeDef')
+          UpLevelStat(Sender, 'Speed')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   FIRE_BLAST: {
@@ -166,9 +268,17 @@ export const Moves: TMoves = {
     Power: 110,
     Accuracy: 85,
     PP: 5,
-    Effect() {
-      console.log("Fire Blast: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   HURRICANE: {
@@ -178,9 +288,17 @@ export const Moves: TMoves = {
     Power: 110,
     Accuracy: 70,
     PP: 10,
-    Effect() {
-      console.log("Hurricane: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (GameInstance.GetWeather() == Weather.RAIN || AccuracyCheck(GameInstance.GetWeather() === Weather.SUN ? 50 : this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          ApplyConfusion(Target)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   DRAGON_PULSE: {
@@ -190,9 +308,14 @@ export const Moves: TMoves = {
     Power: 85,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Dragon Pulse: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   FOCUS_BLAST: {
@@ -202,9 +325,17 @@ export const Moves: TMoves = {
     Power: 120,
     Accuracy: 70,
     PP: 5,
-    Effect() {
-      console.log("Focus Blast: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          DownLevelStat(Target, 'SpeDef')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   POWER_WHIP: {
@@ -214,9 +345,14 @@ export const Moves: TMoves = {
     Power: 120,
     Accuracy: 85,
     PP: 10,
-    Effect() {
-      console.log("Power Whip: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   DOUBLE_EDGE: {
@@ -226,21 +362,35 @@ export const Moves: TMoves = {
     Power: 120,
     Accuracy: 10,
     PP: 15,
-    Effect() {
-      console.log("Double Edge: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DrawbackDamage(Sender, dmg.Damage, 0.3)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   ROCK_SLIDE: {
     Name: "Rock Slide",
     Cat: Category.PHYSIQUE,
     Type: Pokemon_Types.ROCK,
-    Power: 80,
+    Power: 75,
     Accuracy: 90,
     PP: 10,
-    Effect() {
-      console.log("Rock Slide: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          ApplyFear(Target)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   HYDRO_PUMP: {
@@ -250,9 +400,14 @@ export const Moves: TMoves = {
     Power: 120,
     Accuracy: 85,
     PP: 5,
-    Effect() {
-      console.log("Hydro Pump: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   FLASH_CANNON: {
@@ -262,9 +417,17 @@ export const Moves: TMoves = {
     Power: 90,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Flash Cannon: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          DownLevelStat(Target, 'SpeDef')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   ICE_BEAM: {
@@ -274,21 +437,30 @@ export const Moves: TMoves = {
     Power: 90,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Ice Beam: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.FREEZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   AURA_SPHERE: {
     Name: "Aura Sphere",
     Cat: Category.SPECIAL,
     Type: Pokemon_Types.COMBAT,
-    Power: 120,
+    Power: 80,
     Accuracy: null,
     PP: 20,
-    Effect() {
-      console.log("Focus Blast: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+      InflictDamage(Target, dmg.Damage)
     },
   },
   MOON_BLAST: {
@@ -298,9 +470,17 @@ export const Moves: TMoves = {
     Power: 95,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Focus Blast: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          DownLevelStat(Target, 'SpeAtt')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   TRI_ATTACK: {
@@ -310,9 +490,29 @@ export const Moves: TMoves = {
     Power: 80,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Tri Attack: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          switch (Math.floor(Math.random() * 3)) {
+            case 0:
+              ApplyStatut(Target, StatutEnum.BURN)
+              break;
+            case 1:
+              ApplyStatut(Target, StatutEnum.PARALYZE)
+              break;
+            case 2:
+              ApplyStatut(Target, StatutEnum.FREEZE)
+              break;
+            default:
+              break;
+          }
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   FLAMMETHROWER: {
@@ -322,9 +522,17 @@ export const Moves: TMoves = {
     Power: 90,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Flammethrower: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   THUNDERBOLT: {
@@ -334,9 +542,17 @@ export const Moves: TMoves = {
     Power: 90,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Thunderbolt: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.PARALYZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   DARK_PULSE: {
@@ -346,9 +562,17 @@ export const Moves: TMoves = {
     Power: 80,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Dark Pulse: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          ApplyFear(Target)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   SHADOW_BALL: {
@@ -358,9 +582,17 @@ export const Moves: TMoves = {
     Power: 80,
     Accuracy: 100,
     PP: 15,
-    Effect() {
-      console.log("Shadow Ball: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          DownLevelStat(Target, 'SpeDef')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   ENERGY_BALL: {
@@ -370,9 +602,77 @@ export const Moves: TMoves = {
     Power: 90,
     Accuracy: 100,
     PP: 10,
-    Effect() {
-      console.log("Energy Ball: i'm working");
-      // Add your move logic here
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          DownLevelStat(Target, 'SpeDef')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  FIRE_PUNCH: {
+    Name: "Fire Punch",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.FIRE,
+    Power: 75,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  THUNDER_PUNCH: {
+    Name: "Thunder Punch",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ELECTRICK,
+    Power: 75,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.PARALYZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  ICE_PUNCH: {
+    Name: "Ice Punch",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ICE,
+    Power: 75,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.PARALYZE)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
     },
   },
   LUTTE: {
@@ -383,8 +683,10 @@ export const Moves: TMoves = {
     Accuracy: null,
     PP: 1000,
     Effect(GameInstance, Target, Sender) {
-      console.log("Lutte: i'm working");
-      // Add your move logic here
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      let dmg = ComputeDamages(this.Cat, Target, Sender, this.Power!, this.Type, Sender.GetCritChance(), GameInstance.GetWeather())
+      InflictDamage(Target, dmg.Damage)
+      DrawbackDamage(Sender, Sender.GetMaxLP(), 0.25)
     },
   },
 } as const;

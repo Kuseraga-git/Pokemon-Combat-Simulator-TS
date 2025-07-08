@@ -1,4 +1,5 @@
 import { Pokemon_Types } from "../data/Pokemon_Types";
+import { WriteInTextArea } from "./Display";
 
 /**
  * Reproduit le calcul effectué par la table des types de pokemon
@@ -76,6 +77,13 @@ export function ComputeTypeTable(AttackType : Pokemon_Types, Types : Pokemon_Typ
     if (AttackType == "Fly") {
         result = GhostCheck(Types[0], result)
         result = GhostCheck(Types[1], result)
+    }
+    if (result < 1.0 && result > 0) {
+        WriteInTextArea(`It's not very effective...`)
+    } else if (result > 1.0) {
+        WriteInTextArea(`It's super effective !`)
+    } else if (result == 0) {
+        WriteInTextArea(`It doesn't affect this pokemon...`)
     }
     return(result)
 }

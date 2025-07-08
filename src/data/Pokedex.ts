@@ -29,10 +29,10 @@ export const Pokedex: TPokedex = {
     Speed: 306,
     Image: '../../assets/Pokemons/Pikachu.png',
     Moves: [
-      Moves.ELECTACLE,
-      Moves.CALINERIE,
-      Moves.CASSE_BRIQUE,
-      Moves.QUEUE_DE_FER,
+      Moves.VOLT_TACKLE,
+      Moves.PLAY_ROUGH,
+      Moves.BRICK_BREAK,
+      Moves.IRON_TAIL,
     ]
   },
   VENUSAURE: {
@@ -47,10 +47,10 @@ export const Pokedex: TPokedex = {
     Speed: 284,
     Image: '../../assets/Pokemons/Venusaure.png',
     Moves: [
-      Moves.MEGA_SANGSUE,
-      Moves.SEISME,
-      Moves.BOMB_BEURK,
-      Moves.TEMPETE_VERTE
+      Moves.GIGA_DRAIN,
+      Moves.EARTHQUAKE,
+      Moves.SLUDGE_BOMB,
+      Moves.LEAF_STORM
     ]
   },
   LAPRAS: {
@@ -67,8 +67,8 @@ export const Pokedex: TPokedex = {
     Moves: [
       Moves.SURF,
       Moves.BLIZZARD,
-      Moves.PSYKO,
-      Moves.POUVOIR_ANTIQUE
+      Moves.PSYCHIC,
+      Moves.ANCIENT_POWER
     ]
   },
   CHARIZARD: {
