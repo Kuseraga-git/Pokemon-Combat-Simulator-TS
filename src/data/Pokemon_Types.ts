@@ -7,7 +7,7 @@ export enum Pokemon_Types {
     FAIRY = "Fairy",
     FIRE = "Fire",
     ICE = "Ice",
-    INSECT = "Bug",
+    BUG = "Bug",
     NORMAL = "Normal",
     GRASS = "Grass",
     POISON = "Poison",

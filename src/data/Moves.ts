@@ -4,7 +4,7 @@ import { TMoves } from "../Types"
 import { Category } from "./Category"
 import { Pokemon_Types } from "./Pokemon_Types"
 import { WriteInTextArea } from "../Gameplay/Display"
-import { AccuracyCheck } from "./Accuracy"
+import { AccuracyCheck, DownLevelAccuracy } from "./Accuracy"
 import { ComputeDamages, DrawbackDamage, InflictDamage } from "../Gameplay/Offense"
 import { ProbabilityCheck } from "../Gameplay/Utils"
 import { ApplyConfusion, ApplyFear, ApplyStatut } from "../Gameplay/GStatut"
@@ -36,7 +36,7 @@ export const Moves: TMoves = {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
         DrawbackDamage(Sender, dmg.Damage, 0.3)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
         }
       } else {
@@ -56,7 +56,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'Att')
         }
       } else {
@@ -76,7 +76,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           // TODO Remove Screen
         }
       } else {
@@ -96,7 +96,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           DownLevelStat(Target, 'Def')
         }
       } else {
@@ -153,7 +153,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyStatut(Target, StatutEnum.POISONED)
         }
       } else {
@@ -209,7 +209,7 @@ export const Moves: TMoves = {
       if (GameInstance.GetWeather() == Weather.HAIL || AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.FREEZE)
         }
       } else {
@@ -229,7 +229,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
         }
       } else {
@@ -273,7 +273,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.BURN)
         }
       } else {
@@ -293,7 +293,7 @@ export const Moves: TMoves = {
       if (GameInstance.GetWeather() == Weather.RAIN || AccuracyCheck(GameInstance.GetWeather() === Weather.SUN ? 50 : this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyConfusion(Target)
         }
       } else {
@@ -330,7 +330,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
         }
       } else {
@@ -385,7 +385,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyFear(Target)
         }
       } else {
@@ -422,7 +422,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
         }
       } else {
@@ -442,7 +442,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.FREEZE)
         }
       } else {
@@ -475,7 +475,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           DownLevelStat(Target, 'SpeAtt')
         }
       } else {
@@ -495,7 +495,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
           switch (Math.floor(Math.random() * 3)) {
             case 0:
               ApplyStatut(Target, StatutEnum.BURN)
@@ -527,7 +527,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.BURN)
         }
       } else {
@@ -547,7 +547,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
         }
       } else {
@@ -567,7 +567,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
           ApplyFear(Target)
         }
       } else {
@@ -587,7 +587,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
           DownLevelStat(Target, 'SpeDef')
         }
       } else {
@@ -607,7 +607,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           DownLevelStat(Target, 'SpeDef')
         }
       } else {
@@ -627,7 +627,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.BURN)
         }
       } else {
@@ -647,7 +647,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
         }
       } else {
@@ -667,7 +667,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        if (Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
         }
       } else {
@@ -687,6 +687,233 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  DRACO_METEOR: {
+    Name: "Draco Meteor",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.DRAGON,
+    Power: 130,
+    Accuracy: 90,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'SpeAtt')
+        DownLevelStat(Sender, 'SpeAtt')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  OVERHEAT: {
+    Name: "Overheat",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.FIRE,
+    Power: 130,
+    Accuracy: 90,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'SpeAtt')
+        DownLevelStat(Sender, 'SpeAtt')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  PSYCHO_BOOST: {
+    Name: "Psycho Boost",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.PSY,
+    Power: 130,
+    Accuracy: 90,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'SpeAtt')
+        DownLevelStat(Sender, 'SpeAtt')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  V_CREATE: {
+    Name: "V-Create",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.FIRE,
+    Power: 180,
+    Accuracy: 90,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'Def')
+        DownLevelStat(Sender, 'SpeDef')
+        DownLevelStat(Sender, 'Speed')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  BLUE_FLARE: {
+    Name: "Blue Flare",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.FIRE,
+    Power: 130,
+    Accuracy: 85,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  MUDDY_WATER: {
+    Name: "Muddy Water",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.WATER,
+    Power: 90,
+    Accuracy: 85,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          DownLevelAccuracy(Target)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  CROSS_CHOP: {
+    Name: "Cross Chop",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.COMBAT,
+    Power: 100,
+    Accuracy: 80,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance() + 1, GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  BUG_BUZZ: {
+    Name: "Bug Buzz",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.BUG,
+    Power: 90,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          DownLevelStat(Target, 'SpeDef')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  CRUNCH: {
+    Name: "Crunch",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.DARK,
+    Power: 80,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          DownLevelStat(Target, 'Def')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  AQUA_TAIL: {
+    Name: "Aqua Tail",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.WATER,
+    Power: 90,
+    Accuracy: 90,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  SELF_DESTRUCT: {
+    Name: "Self Destruct",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 200,
+    Accuracy: 100,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        InflictDamage(Sender, Sender.GetLP())
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  EXPLOSION: {
+    Name: "Explosion",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 250,
+    Accuracy: 100,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        InflictDamage(Sender, Sender.GetLP())
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
       }

@@ -226,10 +226,11 @@ export class Pokemon {
     }
 
     FormatKO() {
-        if (this.CurrentLP <= 0) {
+        if (this.CurrentLP <= 0 && !this.KO) {
             this.CurrentLP = 0
             this.Statut = StatutEnum.None
             this.KO = true
+            WriteInTextArea(`${this.Name} fall KO !`)
         }
     }
     
