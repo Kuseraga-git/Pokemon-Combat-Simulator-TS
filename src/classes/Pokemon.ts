@@ -25,7 +25,7 @@ export class Pokemon {
     private Speed : number
     private SpeedLevel : number = 0
     private AccuracyLevel : number = 0
-    private CritChance : number = 0
+    private CritChance : number = 1
     private KO : boolean = false
     private Statut : StatutEnum = StatutEnum.None
     private SleepTurn : number = 0

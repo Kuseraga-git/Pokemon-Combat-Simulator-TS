@@ -146,3 +146,25 @@ export function DrawbackDamage(Pokemon : Pokemon, Damage : number, Percentage : 
     WriteInTextArea(`${Pokemon.GetName()} is hit with recoil !`)
     Pokemon.FormatKO()
 }
+
+export function MultiHitAttack5(GameInstance : Game, Target : Pokemon, Sender : Pokemon, MoveInfos : Move, CritFirstAttOnly : boolean) {
+    let dmg = ComputeDamages(MoveInfos, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+    InflictDamage(Target, dmg.Damage)
+    let index : number
+    let randInt : number = (Math.floor(Math.random() * 100))
+    let i : number = 1
+        if (randInt < 15) {
+            index = 5
+        } else if (randInt < 30) {
+            index = 4
+        } else if (randInt < 65) {
+            index = 3
+        } else {
+            index = 2
+        }
+    for (i; i < index && Target.GetKO() == false; i++) {
+        dmg = ComputeDamages(MoveInfos, Target, Sender, CritFirstAttOnly ? 0 : Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+    }
+    WriteInTextArea(`It hit ${i} times !`)
+}

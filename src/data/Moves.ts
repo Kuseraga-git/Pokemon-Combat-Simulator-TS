@@ -5,7 +5,7 @@ import { Category } from "./Category"
 import { Pokemon_Types } from "./Pokemon_Types"
 import { WriteInTextArea } from "../Gameplay/Display"
 import { AccuracyCheck, DownLevelAccuracy } from "./Accuracy"
-import { ComputeDamages, DrawbackDamage, InflictDamage } from "../Gameplay/Offense"
+import { ComputeDamages, DrawbackDamage, InflictDamage, MultiHitAttack5 } from "../Gameplay/Offense"
 import { ProbabilityCheck } from "../Gameplay/Utils"
 import { ApplyConfusion, ApplyFear, ApplyStatut } from "../Gameplay/GStatut"
 import { DownLevelStat, HealLP, UpLevelStat } from "../Gameplay/Alteration"
@@ -970,6 +970,306 @@ export const Moves: TMoves = {
         if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
         }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  HEAD_SMASH: {
+    Name: "Head Smash",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ROCK,
+    Power: 150,
+    Accuracy: 80,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DrawbackDamage(Sender, dmg.Damage, 0.5)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  GUNK_SHOT: {
+    Name: "Gunk Shot",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.POISON,
+    Power: 120,
+    Accuracy: 80,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          ApplyStatut(Target, StatutEnum.POISONED)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  TWISTER: {
+    Name: "Twister",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.DRAGON,
+    Power: 40,
+    Accuracy: 100,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          ApplyFear(Target)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  DOUBLE_SLAP: {
+    Name: "Double Slap",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 15,
+    Accuracy: 85,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, true)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  BULLET_SEED: {
+    Name: "Bullet Seed",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.GRASS,
+    Power: 25,
+    Accuracy: 100,
+    PP: 30,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  ROCK_BLAST: {
+    Name: "Rock Blast",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ROCK,
+    Power: 25,
+    Accuracy: 90,
+    PP: 25,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  ARM_THRUST: {
+    Name: "Arm Thrust",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.COMBAT,
+    Power: 15,
+    Accuracy: 100,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  FURY_SWIPES: {
+    Name: "Fury Swipes",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 18,
+    Accuracy: 80,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, true)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  PIN_MISSILE: {
+    Name: "Pin Missile",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.BUG,
+    Power: 25,
+    Accuracy: 95,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  FURY_ATTACK: {
+    Name: "Fury Attack",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 15,
+    Accuracy: 85,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, true)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  SPIKE_CANNON: {
+    Name: "Spike Cannon",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 20,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  TAIL_SLAP: {
+    Name: "Tail Slap",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 25,
+    Accuracy: 85,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  BONE_RUSH: {
+    Name: "Bone Rush",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.GROUND,
+    Power: 25,
+    Accuracy: 90,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  BARRAGE: {
+    Name: "Barrage",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 20,
+    Accuracy: 85,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  COMET_PUNCH: {
+    Name: "Comet Punch",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 18,
+    Accuracy: 85,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, true)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  WATER_SHURIKEN: { // TODO : Priority
+    Name: "Water Shuriken",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.WATER,
+    Power: 15,
+    Accuracy: 100,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  SCALE_SHOT: {
+    Name: "Scale Shot",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.DRAGON,
+    Power: 25,
+    Accuracy: 90,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
+        UpLevelStat(Sender, 'Speed')
+        DownLevelStat(Sender, 'Def')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  ICICLE_SPEAR: {
+    Name: "Icicle Spear",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ICE,
+    Power: 25,
+    Accuracy: 100,
+    PP: 30,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack5(GameInstance, Target, Sender, this, false)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
       }
