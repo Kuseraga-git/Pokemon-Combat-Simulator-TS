@@ -26,6 +26,12 @@ export class Teams {
         this.pokemons.push(new Pokemon("LAPRAS"))
         console.log("Team Red has been created !")
     }
+    CreateTeamBlue() {
+        this.pokemons.push(new Pokemon("TAUROS"))
+        this.pokemons.push(new Pokemon("EXEGGUTOR"))
+        this.pokemons.push(new Pokemon("CHARIZARD"))
+        console.log("Team Blue has been created !")
+    }
 
     CheckTeamKO() {
         for (const pokemon of this.pokemons) {

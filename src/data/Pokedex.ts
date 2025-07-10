@@ -1,4 +1,4 @@
-import { MoveName, TMoves, TPokedex } from "../Types";
+import { TPokedex } from "../Types";
 import { Move, Moves } from "./Moves";
 import { Pokemon_Types } from "./Pokemon_Types";
 
@@ -29,10 +29,10 @@ export const Pokedex: TPokedex = {
     Speed: 306,
     Image: '../../assets/Pokemons/Pikachu.png',
     Moves: [
-      Moves.VOLT_TACKLE,
-      Moves.PLAY_ROUGH,
-      Moves.BRICK_BREAK,
-      Moves.IRON_TAIL,
+      Moves.SUNNY_DAY,
+      Moves.RAIN_DANCE,
+      Moves.SANDSTORM,
+      Moves.HAIL,
     ]
   },
   VENUSAURE: {
@@ -104,7 +104,7 @@ export const Pokedex: TPokedex = {
       Moves.POWER_WHIP,
       Moves.PSYCHIC,
       Moves.DOUBLE_EDGE,
-      Moves.POUVOIR_ANTIQUE
+      Moves.ANCIENT_POWER
     ]
   },
   TAUROS: {

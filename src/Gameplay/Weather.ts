@@ -10,21 +10,22 @@ export function WeatherDamage(GameInstance : Game, Pokemon1 : Pokemon, Pokemon2 
         if (GameInstance.GetWeather() === Weather.SANDSTORM) {
             if (!(SandRes.includes(Pokemon1.getPokemonTypes()[0] || SandRes.includes(Pokemon1.getPokemonTypes()[1])))) {
                 WriteInTextArea(`${Pokemon1.GetName()} takes damages from Sandstorm !`)
-                Pokemon1.SetLP(Pokemon1.GetLP() - Math.floor(Pokemon1.GetLP() * 1/16))
+                Pokemon1.SetLP(Pokemon1.GetLP() - Math.floor(Pokemon1.GetMaxLP() * 1/16))
             }
             if (!(SandRes.includes(Pokemon2.getPokemonTypes()[0] || SandRes.includes(Pokemon2.getPokemonTypes()[1])))) {
                 WriteInTextArea(`${Pokemon2.GetName()} takes damages from Sandstorm !`)
-                Pokemon2.SetLP(Pokemon2.GetLP() - Math.floor(Pokemon2.GetLP() * 1/16))
+                Pokemon2.SetLP(Pokemon2.GetLP() - Math.floor(Pokemon2.GetMaxLP() * 1/16))
             }
         }
         if (GameInstance.GetWeather() === Weather.HAIL) {
-            if (Pokemon1.getPokemonTypes()[0] !== Pokemon_Types.ICE || Pokemon1.getPokemonTypes()[1] !== Pokemon_Types.ICE) {
+            if (!Pokemon1.getPokemonTypes().includes(Pokemon_Types.ICE)) {
+                console.log("totototoo")
                 WriteInTextArea(`${Pokemon1.GetName()} takes damages from Hail !`)
-                Pokemon1.SetLP(Pokemon1.GetLP() - Math.floor(Pokemon1.GetLP() * 1/16))
+                Pokemon1.SetLP(Pokemon1.GetLP() - Math.floor(Pokemon1.GetMaxLP() * 1/16))
             }
-            if (Pokemon2.getPokemonTypes()[0] !== Pokemon_Types.ICE || Pokemon2.getPokemonTypes()[1] !== Pokemon_Types.ICE) {
+            if (!Pokemon2.getPokemonTypes().includes(Pokemon_Types.ICE)) {
                 WriteInTextArea(`${Pokemon2.GetName()} takes damages from Hail !`)
-                Pokemon2.SetLP(Pokemon2.GetLP() - Math.floor(Pokemon2.GetLP() * 1/16))
+                Pokemon2.SetLP(Pokemon2.GetLP() - Math.floor(Pokemon2.GetMaxLP() * 1/16))
             }
         }
         GameInstance.SetWeatherTurn(GameInstance.GetWeatherTurn() - 1)
@@ -80,4 +81,54 @@ export function RemoveHail(GameInstance : Game) {
             'Def',
             GameInstance.GetTeams()[1].GetPokemon(GameInstance.GetIndexPokemon2()).GetStatLevel('Def') - 1)
     }
+}
+
+export function ApplyNewWeather(GameInstance : Game, NewWeather : Weather) {
+    if (GameInstance.GetWeather() != NewWeather) {
+        NeutralWeather(GameInstance)
+        switch (NewWeather) {
+            case Weather.SUN:
+                ApplySunWeather(GameInstance)
+                break;
+                case Weather.RAIN:
+                ApplyRainWeather(GameInstance)
+                break;
+            case Weather.SANDSTORM:
+                ApplySandstormWeather(GameInstance)
+                break;
+                case Weather.HAIL:
+                ApplyHailWeather(GameInstance)
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+function ApplyRainWeather(GameInstance : Game) {
+    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Rain.png`
+    GameInstance.SetWeather(Weather.RAIN)
+    GameInstance.SetWeatherTurn(5)
+    WriteInTextArea("It started to rain !")
+}
+
+function ApplySandstormWeather(GameInstance : Game) {
+    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Sandstorm.png`
+    GameInstance.SetWeather(Weather.SANDSTORM)
+    GameInstance.SetWeatherTurn(5)
+    WriteInTextArea("A sandstorm kicked up !")
+}
+
+function ApplyHailWeather(GameInstance : Game) {
+    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Hail.png`
+    GameInstance.SetWeather(Weather.HAIL)
+    GameInstance.SetWeatherTurn(5)
+    WriteInTextArea("It started to hail !")
+}
+
+function ApplySunWeather(GameInstance : Game) {
+    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Sun.png`
+    GameInstance.SetWeather(Weather.SUN)
+    GameInstance.SetWeatherTurn(5)
+    WriteInTextArea("The sunlight turned harsh !")
 }

@@ -11,6 +11,7 @@ import { ApplyConfusion, ApplyFear, ApplyStatut } from "../Gameplay/GStatut"
 import { DownLevelStat, HealLP, UpLevelStat } from "../Gameplay/Alteration"
 import { StatutEnum } from "./Statuts"
 import { Weather } from "./Weather"
+import { ApplyNewWeather } from "../Gameplay/Weather"
 
 export interface Move {
     Name : string
@@ -35,7 +36,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        DrawbackDamage(Sender, dmg.Damage, 0.3)
+        DrawbackDamage(Sender, dmg.Damage, 1/3)
         if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
           ApplyStatut(Target, StatutEnum.PARALYZE)
         }
@@ -367,7 +368,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        DrawbackDamage(Sender, dmg.Damage, 0.3)
+        DrawbackDamage(Sender, dmg.Damage, 1/3)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
       }
@@ -987,7 +988,7 @@ export const Moves: TMoves = {
       if (AccuracyCheck(this.Accuracy!, Sender)) {
         let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
         InflictDamage(Target, dmg.Damage)
-        DrawbackDamage(Sender, dmg.Damage, 0.5)
+        DrawbackDamage(Sender, dmg.Damage, 1/2)
       } else {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
       }
@@ -1338,6 +1339,109 @@ export const Moves: TMoves = {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
       }
     },
+  },
+  BOOMBURST: {
+    Name: "Boomburst",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.NORMAL,
+    Power: 140,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  OVERDRIVE: {
+    Name: "Overdrive",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.ELECTRICK,
+    Power: 80,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  FLARE_BLITZ: {
+    Name: "Flare Blitz",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.FIRE,
+    Power: 120,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DrawbackDamage(Sender, dmg.Damage, 1/3)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  SUNNY_DAY: {
+    Name: "Sunny Day",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.FIRE,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      ApplyNewWeather(GameInstance, Weather.SUN)
+    }
+  },
+  RAIN_DANCE: {
+    Name: "Rain Dance",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.WATER,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      ApplyNewWeather(GameInstance, Weather.RAIN)
+    }
+  },
+  SANDSTORM: {
+    Name: "Sandstorm",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.ROCK,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      ApplyNewWeather(GameInstance, Weather.SANDSTORM)
+    }
+  },
+  HAIL: {
+    Name: "Hail",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.ICE,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      ApplyNewWeather(GameInstance, Weather.HAIL)
+    }
   },
   STRUGGLE: {
     Name: "Struggle",
