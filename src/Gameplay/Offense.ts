@@ -10,6 +10,7 @@ import { StatutEnum } from "../data/Statuts";
 import { ComputeConfusionDamage } from "./Alteration";
 import { WriteInTextArea } from "./Display";
 import { Weather } from "../data/Weather";
+import { AccuracyCheck } from "../data/Accuracy";
 
 export function ComputeDamages(Move : Move, Target : Pokemon, Sender : Pokemon, CritChance : number, CurrentWeather : Weather) : DamageIsCrit {
     switch (CurrentWeather) {
@@ -167,4 +168,30 @@ export function MultiHitAttack5(GameInstance : Game, Target : Pokemon, Sender : 
         InflictDamage(Target, dmg.Damage)
     }
     WriteInTextArea(`It hit ${i} times !`)
+}
+
+export function MultiHitAttack2(GameInstance : Game, Target : Pokemon, Sender : Pokemon, MoveInfos : Move, CritFirstAttOnly : boolean) {
+    let dmg = ComputeDamages(MoveInfos, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+    InflictDamage(Target, dmg.Damage)
+    if (!Target.GetKO()){
+        dmg = ComputeDamages(MoveInfos, Target, Sender, CritFirstAttOnly ? 0 : Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        WriteInTextArea(`It hit 2 times !`)
+    } else {
+        WriteInTextArea(`It hit 1 time !`)
+    }
+}
+
+export function MultiHitAttackAccuracy(GameInstance : Game, Target : Pokemon, Sender : Pokemon, MoveInfos : Move, MaxNBHit : number, CallBack : (Value : number, Index? : number) => number) {
+    let dmg = ComputeDamages(MoveInfos, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+    InflictDamage(Target, dmg.Damage)
+    let index : number = 1
+    let newMoveInfos : Move
+    newMoveInfos = Object.assign({}, MoveInfos)
+    for (index; index < MaxNBHit && !Target.GetKO() && AccuracyCheck(MoveInfos.Accuracy!, Sender); index++) {
+        newMoveInfos.Power = CallBack(newMoveInfos.Power!, index)
+        dmg = ComputeDamages(newMoveInfos, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+    }
+    WriteInTextArea(`It hit ${index} times !`)
 }

@@ -5,7 +5,7 @@ import { Category } from "./Category"
 import { Pokemon_Types } from "./Pokemon_Types"
 import { WriteInTextArea } from "../Gameplay/Display"
 import { AccuracyCheck, DownLevelAccuracy } from "./Accuracy"
-import { ComputeDamages, DrawbackDamage, InflictDamage, MultiHitAttack5 } from "../Gameplay/Offense"
+import { ComputeDamages, DrawbackDamage, InflictDamage, MultiHitAttack2, MultiHitAttack5, MultiHitAttackAccuracy } from "../Gameplay/Offense"
 import { ProbabilityCheck } from "../Gameplay/Utils"
 import { ApplyConfusion, ApplyFear, ApplyStatut } from "../Gameplay/GStatut"
 import { DownLevelStat, HealLP, UpLevelStat } from "../Gameplay/Alteration"
@@ -1274,6 +1274,70 @@ export const Moves: TMoves = {
         WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
       }
     }
+  },
+  TWIN_BEAM: {
+    Name: "Twin Beam",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.PSY,
+    Power: 40,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack2(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  BONEMERANG: {
+    Name: "Bonemerang",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.GROUND,
+    Power: 50,
+    Accuracy: 90,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttack2(GameInstance, Target, Sender, this, false)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  TRIPLE_AXEL: {
+    Name: "Triple Axel",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ICE,
+    Power: 20,
+    Accuracy: 90,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttackAccuracy(GameInstance, Target, Sender, this, 3, (value) => value + 20)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  TRIPLE_KICK: {
+    Name: "Triple Kick",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.COMBAT,
+    Power: 10,
+    Accuracy: 90,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        MultiHitAttackAccuracy(GameInstance, Target, Sender, this, 3, (value, index) => value * (1 + index!))
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
   },
   STRUGGLE: {
     Name: "Struggle",
