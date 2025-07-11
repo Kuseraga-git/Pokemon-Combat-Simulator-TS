@@ -155,9 +155,9 @@ export const Pokedex: TPokedex = {
     Speed: 240,
     Image: '../../assets/Pokemons/Clefable.png',
     Moves: [
-      Moves.MOONBLAST,
+      Moves.MOON_BLAST,
       Moves.TRI_ATTACK,
-      Moves.FLAMETHROWER,
+      Moves.FLAMMETHROWER,
       Moves.DARK_PULSE
     ]
   },
@@ -175,8 +175,8 @@ export const Pokedex: TPokedex = {
     Moves: [
       Moves.DARK_PULSE,
       Moves.SHADOW_BALL,
-      Moves.BOMB_BEURK,
-      Moves.POUVOIR_ANTIQUE
+      Moves.SLUDGE_BOMB,
+      Moves.ENERGY_BALL
     ]
   },
 }

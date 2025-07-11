@@ -1,3 +1,4 @@
+import { WriteInTextArea } from "../Gameplay/Display"
 import { Pokemon } from "./Pokemon"
 
 export class Teams {
@@ -22,15 +23,23 @@ export class Teams {
 
     CreateTeamRed() {
         this.pokemons.push(new Pokemon("PIKACHU"))
-        this.pokemons.push(new Pokemon("VENUSAURE"))
         this.pokemons.push(new Pokemon("LAPRAS"))
-        console.log("Team Red has been created !")
+        this.pokemons.push(new Pokemon("VENUSAURE"))
+        WriteInTextArea("Team Red has been created !")
     }
+    
     CreateTeamBlue() {
         this.pokemons.push(new Pokemon("TAUROS"))
         this.pokemons.push(new Pokemon("EXEGGUTOR"))
         this.pokemons.push(new Pokemon("CHARIZARD"))
-        console.log("Team Blue has been created !")
+        WriteInTextArea("Team Blue has been created !")
+    }
+    
+    CreateTeamLeaf() {
+        this.pokemons.push(new Pokemon("CLEFABLE"))
+        this.pokemons.push(new Pokemon("GENGAR"))
+        this.pokemons.push(new Pokemon("BLASTOISE"))
+        WriteInTextArea("Team Leaf has been created !")
     }
 
     CheckTeamKO() {
