@@ -216,7 +216,7 @@ ul {
     clear: both;
 }
 
-#meteo {
+#weather {
     display: block;
     width: 7%; /* Pour que l'image ne dépasse pas de son conteneur */
     height: auto;

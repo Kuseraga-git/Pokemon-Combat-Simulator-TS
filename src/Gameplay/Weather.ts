@@ -47,7 +47,7 @@ export function NeutralWeather(GameInstance : Game) {
             default:
                 break;
         }
-        (document.getElementById("meteo") as HTMLImageElement).src = ""
+        (document.getElementById("weather") as HTMLImageElement).src = ""
         GameInstance.SetWeather(Weather.None)
         GameInstance.SetWeatherTurn(0)
     }
@@ -106,28 +106,28 @@ export function ApplyNewWeather(GameInstance : Game, NewWeather : Weather) {
 }
 
 function ApplyRainWeather(GameInstance : Game) {
-    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Rain.png`
+    (document.getElementById(`weather`) as HTMLImageElement).src = `./assets/Weather/Rain.png`
     GameInstance.SetWeather(Weather.RAIN)
     GameInstance.SetWeatherTurn(5)
     WriteInTextArea("It started to rain !")
 }
 
 function ApplySandstormWeather(GameInstance : Game) {
-    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Sandstorm.png`
+    (document.getElementById(`weather`) as HTMLImageElement).src = `./assets/Weather/Sandstorm.png`
     GameInstance.SetWeather(Weather.SANDSTORM)
     GameInstance.SetWeatherTurn(5)
     WriteInTextArea("A sandstorm kicked up !")
 }
 
 function ApplyHailWeather(GameInstance : Game) {
-    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Hail.png`
+    (document.getElementById(`weather`) as HTMLImageElement).src = `./assets/Weather/Hail.png`
     GameInstance.SetWeather(Weather.HAIL)
     GameInstance.SetWeatherTurn(5)
     WriteInTextArea("It started to hail !")
 }
 
 function ApplySunWeather(GameInstance : Game) {
-    (document.getElementById(`meteo`) as HTMLImageElement).src = `./assets/Weather/Sun.png`
+    (document.getElementById(`weather`) as HTMLImageElement).src = `./assets/Weather/Sun.png`
     GameInstance.SetWeather(Weather.SUN)
     GameInstance.SetWeatherTurn(5)
     WriteInTextArea("The sunlight turned harsh !")
