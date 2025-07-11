@@ -6,7 +6,7 @@ export interface Pokemon {
   Name: string;
   Type1: Pokemon_Types;
   Type2: Pokemon_Types;
-  Max_LP: number;
+  MaxLP: number;
   Att: number;
   Def: number;
   SpeAtt: number;
@@ -21,7 +21,7 @@ export const Pokedex: TPokedex = {
     Name: "Pikachu",
     Type1: Pokemon_Types.ELECTRICK,
     Type2: Pokemon_Types.None,
-    Max_LP: 274,
+    MaxLP: 274,
     Att: 350,
     Def: 196,
     SpeAtt: 218,
@@ -39,7 +39,7 @@ export const Pokedex: TPokedex = {
     Name: "Venusaure",
     Type1: Pokemon_Types.GRASS,
     Type2: Pokemon_Types.POISON,
-    Max_LP: 364,
+    MaxLP: 364,
     Att: 289,
     Def: 291,
     SpeAtt: 328,
@@ -57,7 +57,7 @@ export const Pokedex: TPokedex = {
     Name: "Lapras",
     Type1: Pokemon_Types.WATER,
     Type2: Pokemon_Types.ICE,
-    Max_LP: 464,
+    MaxLP: 464,
     Att: 295,
     Def: 284,
     SpeAtt: 295,
@@ -75,7 +75,7 @@ export const Pokedex: TPokedex = {
     Name: "Charizard",
     Type1: Pokemon_Types.FIRE,
     Type2: Pokemon_Types.FLY,
-    Max_LP: 360,
+    MaxLP: 360,
     Att: 293,
     Def: 280,
     SpeAtt: 348,
@@ -93,7 +93,7 @@ export const Pokedex: TPokedex = {
     Name: "Exeggutor",
     Type1: Pokemon_Types.GRASS,
     Type2: Pokemon_Types.PSY,
-    Max_LP: 394,
+    MaxLP: 394,
     Att: 317,
     Def: 295,
     SpeAtt: 383,
@@ -111,7 +111,7 @@ export const Pokedex: TPokedex = {
     Name: "Tauros",
     Type1: Pokemon_Types.NORMAL,
     Type2: Pokemon_Types.None,
-    Max_LP: 354,
+    MaxLP: 354,
     Att: 328,
     Def: 317,
     SpeAtt: 196,
@@ -129,7 +129,7 @@ export const Pokedex: TPokedex = {
     Name: "Blastoise",
     Type1: Pokemon_Types.WATER,
     Type2: Pokemon_Types.None,
-    Max_LP: 362,
+    MaxLP: 362,
     Att: 291,
     Def: 328,
     SpeAtt: 295,
@@ -147,7 +147,7 @@ export const Pokedex: TPokedex = {
     Name: "Clefable",
     Type1: Pokemon_Types.FAIRY,
     Type2: Pokemon_Types.None,
-    Max_LP: 394,
+    MaxLP: 394,
     Att: 262,
     Def: 269,
     SpeAtt: 317,
@@ -165,7 +165,7 @@ export const Pokedex: TPokedex = {
     Name: "Gengar",
     Type1: Pokemon_Types.GHOST,
     Type2: Pokemon_Types.POISON,
-    Max_LP: 324,
+    MaxLP: 324,
     Att: 251,
     Def: 240,
     SpeAtt: 394,

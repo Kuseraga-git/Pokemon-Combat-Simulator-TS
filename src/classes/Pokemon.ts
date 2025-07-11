@@ -10,7 +10,7 @@ import { Weather } from "../data/Weather"
 
 export class Pokemon {
     private readonly Name : string
-    private readonly Max_LP : number
+    private readonly MaxLP : number
     private CurrentLP : number
     private Type1 : Pokemon_Types
     private Type2 : Pokemon_Types
@@ -40,8 +40,8 @@ export class Pokemon {
     constructor(pokemon : keyof typeof Pokedex) {
         const pokemonData = Pokedex[pokemon]
         this.Name = pokemonData.Name
-        this.Max_LP = pokemonData.Max_LP
-        this.CurrentLP = pokemonData.Max_LP
+        this.MaxLP = pokemonData.MaxLP
+        this.CurrentLP = pokemonData.MaxLP
         this.Type1 = pokemonData.Type1
         this.Type2 = pokemonData.Type2
         this.Att = pokemonData.Att
@@ -298,7 +298,7 @@ export class Pokemon {
     }
 
     GetMaxLP() : number {
-        return(this.Max_LP)
+        return(this.MaxLP)
     }
 
     GetPoisonTurn() : number {

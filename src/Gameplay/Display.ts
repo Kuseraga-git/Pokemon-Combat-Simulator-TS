@@ -6,11 +6,11 @@ import { Move, Moves } from "../data/Moves";
 import { Statut, StatutEnum } from "../data/Statuts";
 
 export function ResetTextArea() {
-    document.getElementById("zone-de-texte")!.innerHTML = ''
+    document.getElementById("text-zone")!.innerHTML = ''
 }
 
 export function WriteInTextArea(Content : string) {
-    document.getElementById("zone-de-texte")!.innerHTML += `${Content}<br>`
+    document.getElementById("text-zone")!.innerHTML += `${Content}<br>`
 }
 
 export function StandardDisplay(GameInstance : Game) {
@@ -34,7 +34,7 @@ export function DisplayPokemon1(Pokemon1 : Pokemon, GameInstance : Game) {
             document.getElementById(`PPCapa${index}`)!.textContent = Pokemon1.GetMovePP(index).toString()
         })
     }
-    document.getElementById("aleatoire")!.addEventListener("click", function(event) {
+    document.getElementById("random")!.addEventListener("click", function(event) {
         let randValue = Math.floor(Math.random() * 4)
         GameInstance.CombatAction(randValue)
         document.getElementById(`PPCapa${randValue}`)!.textContent = Pokemon1.GetMovePP(randValue).toString()
@@ -47,12 +47,12 @@ export function DisplayPokemon2(Pokemon : Pokemon) {
 }
 
 export function DisplayTeam1(GameInstance : Game, Team : Teams) {
-    const teamContainer = <HTMLElement>document.getElementById("equipe1")
+    const teamContainer = <HTMLElement>document.getElementById("team1")
     Team.GetPokemons().forEach((pokemon, pkmIndex) => {
         const pokemonCard = CreatePokemonCard(pokemon, pkmIndex, Team, 1)
         teamContainer.innerHTML += pokemonCard
     })
-    const pokemonCards : NodeListOf<Element>= document.querySelectorAll(".equipe1-pokemon-card")
+    const pokemonCards : NodeListOf<Element>= document.querySelectorAll(".team1-pokemon-card")
     for (const [index, element] of pokemonCards.entries()) {
         element.addEventListener("click", function(event) {
             document.getElementById("capa-list1")!.innerHTML = ''
@@ -63,7 +63,7 @@ export function DisplayTeam1(GameInstance : Game, Team : Teams) {
 }
 
 export function DisplayTeam2(Team : Teams) {
-    const teamContainer = <HTMLElement>document.getElementById("equipe2")
+    const teamContainer = <HTMLElement>document.getElementById("team2")
     teamContainer.innerHTML = ''
     Team.GetPokemons().forEach((pokemon, index) => {
         const pokemonCard = CreateStatutTeam2(pokemon, index)
@@ -76,8 +76,8 @@ export function CreatePokemonCombatCard(Pokemon : Pokemon, index : number) : str
         <div class="card" data-index="${index}">
             <div class="pokemon-infos">
                 <h5 class="card-title">${Pokemon.GetName()}</h5>
-                <progress id="PV${index}-progress" value="${Pokemon.GetLP()}" max="${Pokemon.GetMaxLP()}">${Pokemon.GetLP()} / ${Pokemon.GetMaxLP()}</progress>
-                <p class="card-text" id="PV${index}">PV: ${Pokemon.GetLP()} / ${Pokemon.GetMaxLP()}</p>
+                <progress id="LP${index}-progress" value="${Pokemon.GetLP()}" max="${Pokemon.GetMaxLP()}">${Pokemon.GetLP()} / ${Pokemon.GetMaxLP()}</progress>
+                <p class="card-text" id="LP${index}">LP: ${Pokemon.GetLP()} / ${Pokemon.GetMaxLP()}</p>
                 <img class="Pokemon_Type" src="./assets/Types/Type_${Pokemon.getPokemonTypes()[0]}.png"/>
                 <img class="Pokemon_Type" src="./assets/Types/Type_${Pokemon.getPokemonTypes()[1]}.png"/>
                 <p class="card-text">Statut: <img id="pkm-statut-${index}" class="statut-box" src="${Statut[Pokemon.GetStatut()].Image}"></img></p>
@@ -89,13 +89,13 @@ export function CreatePokemonCombatCard(Pokemon : Pokemon, index : number) : str
 
 export function CreatePokemonCard(Pokemon : Pokemon, Index : number, Team : Teams, IndexTeam : number) {
     return(`
-        <button class="equipe${IndexTeam}-pokemon-card">
+        <button class="team${IndexTeam}-pokemon-card">
             <div class="${Team.GetTrainer()}">
                 <h5 class="card-title">${Pokemon.GetName()}</h5>
-                <p id="equipe${IndexTeam}-${Index}" class="card-text">PV: ${Pokemon.GetLP()} / ${Pokemon.GetMaxLP()}</p>
+                <p id="team${IndexTeam}-${Index}" class="card-text">LP: ${Pokemon.GetLP()} / ${Pokemon.GetMaxLP()}</p>
                 <img class="Team_Type" src="./assets/Types/Type_${Pokemon.getPokemonTypes()[0]}.png"/>
                 <img class="Team_Type" src="./assets/Types/Type_${Pokemon.getPokemonTypes()[1]}.png"/>
-                <p class="card-text-mini"><img id="equipe${IndexTeam}-${Index}-statut" class="statut-box" src="${Statut[Pokemon.GetStatut()].Image}"></img></p>
+                <p class="card-text-mini"><img id="team${IndexTeam}-${Index}-statut" class="statut-box" src="${Statut[Pokemon.GetStatut()].Image}"></img></p>
                 <ul>
                     <li class="list_Capa_mini"><div class="capa_mini ${Pokemon.GetMove(0).Type}">${Pokemon.GetMove(0).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'0'}">${Pokemon.GetMovePP(0)}</span>/${Pokemon.GetMove(0).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${Pokemon.GetMove(0).Cat}.png"/></div></li>
                     <li class="list_Capa_mini"><div class="capa_mini ${Pokemon.GetMove(1).Type}">${Pokemon.GetMove(1).Name} <span class="PP_Capa_mini"><span id="${Index}PPCapa${'1'}">${Pokemon.GetMovePP(1)}</span>/${Pokemon.GetMove(0).PP}</span><img class="cat_Capa_mini" src="./assets/Utils/${Pokemon.GetMove(1).Cat}.png"/></div></li>
@@ -112,17 +112,17 @@ export function CreatePokemonMove(Move : Move, PP : number, Index : number) : st
 }
 
 export function CreateStatutTeam2(Pokemon : Pokemon, Index : number) {
-    return `<img id="equipe2-${Index}" class="pokeball" src="${Pokemon.GetKO() ? "./assets/Utils/pokeball_ko.png" : Pokemon.GetStatut() != StatutEnum.None ? "./assets/Utils/pokeball_statut.png" : "./assets/Utils/pokeball_ok.png"}"></img>`;
+    return `<img id="team2-${Index}" class="pokeball" src="${Pokemon.GetKO() ? "./assets/Utils/pokeball_ko.png" : Pokemon.GetStatut() != StatutEnum.None ? "./assets/Utils/pokeball_statut.png" : "./assets/Utils/pokeball_ok.png"}"></img>`;
 }
 
 export function UpdateLPPokemons(Pokemon1 : Pokemon, Index : number, Pokemon2 : Pokemon, Team2 : Teams) {
-    (document.getElementById("PV1-progress") as HTMLProgressElement).value = Pokemon1.GetLP();
-    document.getElementById("PV1")!.textContent = `PV: ${Pokemon1.GetLP()} / ${Pokemon1.GetMaxLP()}`;
-    document.getElementById(`equipe1-${Index}`)!.textContent = `PV: ${Pokemon1.GetLP()} / ${Pokemon1.GetMaxLP()}`;
-    (document.getElementById(`equipe1-${Index}-statut`) as HTMLImageElement).src = Statut[Pokemon1.GetStatut()].Image;
+    (document.getElementById("LP1-progress") as HTMLProgressElement).value = Pokemon1.GetLP();
+    document.getElementById("LP1")!.textContent = `LP: ${Pokemon1.GetLP()} / ${Pokemon1.GetMaxLP()}`;
+    document.getElementById(`team1-${Index}`)!.textContent = `LP: ${Pokemon1.GetLP()} / ${Pokemon1.GetMaxLP()}`;
+    (document.getElementById(`team1-${Index}-statut`) as HTMLImageElement).src = Statut[Pokemon1.GetStatut()].Image;
     (document.getElementById(`pkm-statut-1`) as HTMLImageElement).src = Statut[Pokemon1.GetStatut()].Image;
-    (document.getElementById("PV2-progress") as HTMLProgressElement).value = Pokemon2.GetLP();
-    document.getElementById("PV2")!.textContent = `PV: ${Pokemon2.GetLP()} / ${Pokemon2.GetMaxLP()}`;
+    (document.getElementById("LP2-progress") as HTMLProgressElement).value = Pokemon2.GetLP();
+    document.getElementById("LP2")!.textContent = `LP: ${Pokemon2.GetLP()} / ${Pokemon2.GetMaxLP()}`;
     (document.getElementById(`pkm-statut-2`) as HTMLImageElement).src = Statut[Pokemon2.GetStatut()].Image;
     document.getElementById(`${Index}PPCapa0`)!.textContent = Pokemon1.GetMovePP(0).toString()
     document.getElementById(`${Index}PPCapa1`)!.textContent = Pokemon1.GetMovePP(1).toString()
