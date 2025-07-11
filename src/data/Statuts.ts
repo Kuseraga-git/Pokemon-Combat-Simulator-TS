@@ -13,10 +13,10 @@ export enum StatutEnum {
 }
 
 export const Statut : Record<StatutEnum, StatutInfo> = {
-    [StatutEnum.BURN]: {Name : "Burn", Image : "../../Images_Statuts/Burn.png"},
-    [StatutEnum.FREEZE]: {Name : "Freeze", Image : "../../Images_Statuts/Freeze.png"},
-    [StatutEnum.PARALYZE]: {Name : "Paralyze", Image : "../../Images_Statuts/Paralyze.png"},
-    [StatutEnum.POISONED]: {Name : "Poisoned", Image : "../../Images_Statuts/Poisoned.png"},
-    [StatutEnum.SLEEP]: {Name : "Sleep", Image : "../../Images_Statuts/Sleep.png"},
+    [StatutEnum.BURN]: {Name : "Burn", Image : "./assets/Statuts/Burn.png"},
+    [StatutEnum.FREEZE]: {Name : "Freeze", Image : "./assets/Statuts/Freeze.png"},
+    [StatutEnum.PARALYZE]: {Name : "Paralyze", Image : "./assets/Statuts/Paralyze.png"},
+    [StatutEnum.POISONED]: {Name : "Poisoned", Image : "./assets/Statuts/Poisoned.png"},
+    [StatutEnum.SLEEP]: {Name : "Sleep", Image : "./assets/Statuts/Sleep.png"},
     [StatutEnum.None]: {Name : "None", Image : ""}
 }

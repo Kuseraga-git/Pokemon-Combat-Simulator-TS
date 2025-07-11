@@ -90,7 +90,7 @@ export function CanAttack(GameInstance : Game, Sender : Pokemon, Move : Move, Ta
         if (Sender.GetStatut() === StatutEnum.None && Sender.GetConfusion() === false && Sender.GetFear() === false) {
             return(true)
         } else if (Sender.GetStatut() === StatutEnum.FREEZE) {
-            if (Move.Type === Pokemon_Types.FIRE || Move.Name == 'Hydro Steam' || ProbabilityCheck(20)) {
+            if (Move.Type === Pokemon_Types.FIRE || Move.Name == 'Hydro Steam' || Move.Name == 'Steam Eruption' || ProbabilityCheck(20)) {
                 WriteInTextArea(`${Sender.GetName()} thawed out !`)
                 Sender.SetStatut(StatutEnum.None)
                 return(true)

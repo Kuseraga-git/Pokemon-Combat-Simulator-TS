@@ -1443,6 +1443,479 @@ export const Moves: TMoves = {
       ApplyNewWeather(GameInstance, Weather.HAIL)
     }
   },
+  MORNING_SUN: {
+    Name:"Morning Sun",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.NORMAL,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      let value : number
+      switch (GameInstance.GetWeather()) {
+        case Weather.SUN:
+          value = Sender.GetMaxLP()*2/3
+          break;
+        case Weather.None:
+          value = Sender.GetMaxLP()*1/2
+          break
+        default:
+          value = Sender.GetMaxLP()*1/4
+          break;
+      }
+      HealLP(Sender, value)
+    }
+  },
+  SYNTHESIS: {
+    Name:"Synthesis",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.GRASS,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      let value : number
+      switch (GameInstance.GetWeather()) {
+        case Weather.SUN:
+          value = Sender.GetMaxLP()*2/3
+          break;
+        case Weather.None:
+          value = Sender.GetMaxLP()*1/2
+          break
+        default:
+          value = Sender.GetMaxLP()*1/4
+          break;
+      }
+      HealLP(Sender, value)
+    }
+  },
+  MOONLIGHT: {
+    Name:"Moonlight",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.FAIRY,
+    Power: null,
+    Accuracy: null,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      let value : number
+      switch (GameInstance.GetWeather()) {
+        case Weather.SUN:
+          value = Sender.GetMaxLP()*2/3
+          break;
+        case Weather.None:
+          value = Sender.GetMaxLP()*1/2
+          break
+        default:
+          value = Sender.GetMaxLP()*1/4
+          break;
+      }
+      HealLP(Sender, value)
+    }
+  },
+  GROWTH: {
+    Name: "Growth",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.NORMAL,
+    Power: null,
+    Accuracy: null,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      UpLevelStat(Sender, 'Att')
+      UpLevelStat(Sender, 'SpeAtt')
+      if (GameInstance.GetWeather() === Weather.SUN) {
+        UpLevelStat(Sender, 'Att')
+        UpLevelStat(Sender, 'SpeAtt')
+      }
+    }
+  },
+  HEAL_PULSE: {
+    Name: "Heal Pulse",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.PSY,
+    Power: null,
+    Accuracy: null,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      HealLP(Target, Target.GetMaxLP()*1/2)
+    }
+  },
+  RECOVER: {
+    Name: "Recover",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.NORMAL,
+    Power: null,
+    Accuracy: null,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      HealLP(Sender, Sender.GetMaxLP()*1/2)
+    }
+  },
+  STRENGTH: {
+    Name: "Strength",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.NORMAL,
+    Power: 80,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  METEOR_DRIVE: {
+    Name: "Sunsteel Strike",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.STEEL,
+    Power: 100,
+    Accuracy: 100,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  PRECIPICE_BLADES: {
+    Name: "Precipice Blades",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.GROUND,
+    Power: 120,
+    Accuracy: 85,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  ZAP_CANNON: {
+    Name: "Zap Cannon",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.ELECTRICK,
+    Power: 120,
+    Accuracy: 50,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        ApplyStatut(Target, StatutEnum.PARALYZE)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  SWORDS_DANCE: {
+    Name: "Swords Dance",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.NORMAL,
+    Power: null,
+    Accuracy: null,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      UpLevelStat(Sender, 'Att')
+      UpLevelStat(Sender, 'Att')
+    }
+  },
+  CLOSE_COMBAT: {
+    Name: "Close Combat",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.COMBAT,
+    Power: 120,
+    Accuracy: 100,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Sender, 'Def')
+        DownLevelStat(Sender, 'SpeDef')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  WICKED_TORQUE: {
+    Name: "Wicked Torque",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.DARK,
+    Power: 80,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(10)){
+          ApplyStatut(Target, StatutEnum.SLEEP)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  CONFUSE_RAY: {
+    Name: "Confuse Ray",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.GHOST,
+    Power: null,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        ApplyConfusion(Target)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  BULLDOZE: {
+    Name: "Bulldoze",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.GROUND,
+    Power: 60,
+    Accuracy: 100,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Target, 'Speed')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  HYPER_VOICE: {
+    Name: "Hyper Voice",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.NORMAL,
+    Power: 90,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        // TODO : ByPass clone
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  LIQUIDATION: {
+    Name: "Liquidation",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.WATER,
+    Power: 85,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          DownLevelStat(Target, 'Def')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  STONE_EDGE: {
+    Name: "Stone Edge",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.ROCK,
+    Power: 100,
+    Accuracy: 80,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance() + 1, GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    },
+  },
+  MATCHA_GOTCHA: {
+    Name: "Matcha Gotcha",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.GRASS,
+    Power: 80,
+    Accuracy: 90,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        HealLP(Sender, dmg.Damage/2)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  STEAM_ERUPTION: {
+    Name: "Steam Eruption",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.WATER,
+    Power: 110,
+    Accuracy: 95,
+    PP: 5,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (Target.GetStatut() === StatutEnum.FREEZE) {
+          Target.SetStatut(StatutEnum.None)
+        }
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(30)){
+          ApplyStatut(Target, StatutEnum.BURN)
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  SPIRIT_BREAK: {
+    Name: "Spirit Break",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.FAIRY,
+    Power: 75,
+    Accuracy: 100,
+    PP: 15,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Target, 'SpeAtt')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  CHILLING_WATER: {
+    Name: "Chilling Water",
+    Cat: Category.SPECIAL,
+    Type: Pokemon_Types.WATER,
+    Power: 50,
+    Accuracy: 100,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        DownLevelStat(Target, 'Att')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  BRINE: {
+    Name: "Brine",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.WATER,
+    Power: 65,
+    Accuracy: 100,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        if (Sender.GetLP() <= Sender.GetMaxLP()/2) {
+          this.Power = this.Power! * 2
+        }
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  METEOR_MASH: {
+    Name: "Meteor Mash",
+    Cat: Category.PHYSIQUE,
+    Type: Pokemon_Types.STEEL,
+    Power: 90,
+    Accuracy: 90,
+    PP: 10,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        let dmg = ComputeDamages(this, Target, Sender, Sender.GetCritChance(), GameInstance.GetWeather())
+        InflictDamage(Target, dmg.Damage)
+        if (!Target.GetKO() && dmg.Damage > 0 && ProbabilityCheck(20)){
+          UpLevelStat(Sender, 'Att')
+        }
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  METAL_SOUND: {
+    Name: "Metal Sound",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.STEEL,
+    Power: null,
+    Accuracy: 85,
+    PP: 40,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      if (AccuracyCheck(this.Accuracy!, Sender)) {
+        DownLevelStat(Target, 'SpeDef')
+        DownLevelStat(Target, 'SpeDef')
+      } else {
+        WriteInTextArea(`${Sender.GetName()}'s attack missed !`)
+      }
+    }
+  },
+  DRAGON_DANCE: {
+    Name: "Dragon Dance",
+    Cat: Category.STATUS,
+    Type: Pokemon_Types.DRAGON,
+    Power: null,
+    Accuracy: null,
+    PP: 20,
+    Effect(GameInstance, Target, Sender) {
+      WriteInTextArea(`${Sender.GetName()} use ${this.Name} !`)
+      UpLevelStat(Sender, 'SpeAtt')
+      UpLevelStat(Sender, 'Speed')
+    }
+  },
   STRUGGLE: {
     Name: "Struggle",
     Cat: Category.PHYSIQUE,

@@ -1,7 +1,7 @@
 export enum Weather {
-    SUN = "../Images_Weather/Sun.png",
-    RAIN = "../Images_Weather/Rain.png",
-    SANDSTORM = "../Images_Weather/Sandstorm.png",
-    HAIL = "../Images_Weather/Hail.png",
+    SUN = "./assets/Weather/Sun.png",
+    RAIN = "./assets/Weather/Rain.png",
+    SANDSTORM = "./assets/Weather/Sandstorm.png",
+    HAIL = "./assets/Weather/Hail.png",
     None = "",
 }

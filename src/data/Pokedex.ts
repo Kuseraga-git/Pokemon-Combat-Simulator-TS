@@ -29,10 +29,10 @@ export const Pokedex: TPokedex = {
     Speed: 306,
     Image: '../../assets/Pokemons/Pikachu.png',
     Moves: [
-      Moves.SUNNY_DAY,
-      Moves.RAIN_DANCE,
-      Moves.SANDSTORM,
-      Moves.HAIL,
+      Moves.VOLT_TACKLE,
+      Moves.PLAY_ROUGH,
+      Moves.BRICK_BREAK,
+      Moves.IRON_TAIL,
     ]
   },
   VENUSAURE: {
