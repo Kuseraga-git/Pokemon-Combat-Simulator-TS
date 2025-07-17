@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pokemon Battle</title>
+        <!-- <script src="dist/index.js" type="module"></script> -->
+        <link href="./style.css" rel="stylesheet" type="text/css"/>
+    </head>
+<body>
+    <div class="flex-container">
+        <div id="pokemon1" class="flex-child pokemons-affichage-haut">
+            <div class="card" data-index="<%= Data.IndexPokemon1 %>">
+                <div class="pokemon-infos">
+                    <h5 class="card-title"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Name %></h5>
+                    <progress id="LP<%= Data.IndexPokemon1 %>-progress" value="<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].CurrentLP %>" max="<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].MaxLP %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].CurrentLP %> / <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].MaxLP %></progress>
+                    <p class="card-text" id="LP<%= Data.IndexPokemon1 %>">LP: <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].CurrentLP %> / <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].MaxLP %></p>
+                    <img class="Pokemon_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Type1 %>.png"/>
+                    <img class="Pokemon_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Type2 %>.png"/>
+                    <p class="card-text">Statut: <img id="pkm-statut-<%= Data.IndexPokemon1 %>" class="statut-box" src="<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Statut === 'None' ? '' : './assets/Statuts/' + Data.Teams[0].Pokemons[Data.IndexPokemon1].Statut + '.png' %>"></img></p>
+                </div>                                                                                              
+                <img class="pokemon-image" src="<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Image %>" alt="<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Name %>" />
+            </div>
+        </div>
+        <div id="pokemon2" class="flex-child pokemons-affichage-haut">
+            <div class="card" data-index="<%= Data.IndexPokemon2 %>">
+                <div class="pokemon-infos">
+                    <h5 class="card-title"><%= Data.Teams[1].Pokemons[Data.IndexPokemon2].Name %></h5>
+                    <progress id="LP<%= Data.IndexPokemon2 %>-progress" value="<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].CurrentLP %>" max="<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].MaxLP %>"><%= Data.Teams[1].Pokemons[Data.IndexPokemon2].CurrentLP %> / <%= Data.Teams[1].Pokemons[Data.IndexPokemon2].MaxLP %></progress>
+                    <p class="card-text" id="LP<%= Data.IndexPokemon2 %>">LP: <%= Data.Teams[1].Pokemons[Data.IndexPokemon2].CurrentLP %> / <%= Data.Teams[1].Pokemons[Data.IndexPokemon2].MaxLP %></p>
+                    <img class="Pokemon_Type" src="./assets/Types/Type_<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].Type1 %>.png"/>
+                    <img class="Pokemon_Type" src="./assets/Types/Type_<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].Type2 %>.png"/>
+                    <p class="card-text">Statut: <img id="pkm-statut-<%= Data.IndexPokemon2 %>" class="statut-box" src="<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].Statut === 'None' ? '' : './assets/Statuts/' + Data.Teams[1].Pokemons[Data.IndexPokemon2].Statut + '.png' %>"></img></p>
+                </div>
+                <img class="pokemon-image" src="<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].Image %>" alt="<%= Data.Teams[1].Pokemons[Data.IndexPokemon2].Name %>" />
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="control-panel">
+            <ul id="capa-list1">
+                <li class="list_Capa">
+                    <button onclick="sendCombatAction(0)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[0] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].PP %></span>
+                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].Cat %>.png"/>
+                    </button>
+                </li>
+                <li class="list_Capa">
+                    <button onclick="sendCombatAction(1)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[1] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].PP %></span>
+                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].Cat %>.png"/>
+                    </button>
+                </li>
+                <li class="list_Capa">
+                    <button onclick="sendCombatAction(2)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[2] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].PP %></span>
+                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].Cat %>.png"/>
+                    </button>
+                </li>
+                <li class="list_Capa">
+                    <button onclick="sendCombatAction(3)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[3] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].PP %></span>
+                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].Cat %>.png"/>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <button onclick="sendCombatAction(Math.floor(Math.random() * 4))" id="random">Random</button>
+        <img id="weather" src="<%= Data.Weather %>"></img>
+        <div id="team2">
+            <img id="team2-0" class="pokeball" src="<%= Data.Teams[1].Pokemons[0].KO ? './assets/Utils/pokeball_ko.png' : Data.Teams[1].Pokemons[0].Statut != 'None' ? './assets/Utils/pokeball_statut.png' : './assets/Utils/pokeball_ok.png' %>"></img>
+            <img id="team2-1" class="pokeball" src="<%= Data.Teams[1].Pokemons[1].KO ? './assets/Utils/pokeball_ko.png' : Data.Teams[1].Pokemons[1].Statut != 'None' ? './assets/Utils/pokeball_statut.png' : './assets/Utils/pokeball_ok.png' %>"></img>
+            <img id="team2-2" class="pokeball" src="<%= Data.Teams[1].Pokemons[2].KO ? './assets/Utils/pokeball_ko.png' : Data.Teams[1].Pokemons[2].Statut != 'None' ? './assets/Utils/pokeball_statut.png' : './assets/Utils/pokeball_ok.png' %>"></img>
+        </div>
+    </div>
+    <div class="clear flex-bottom-container">
+        <div id="team1" class="flex-bottom-child">
+            <button onclick="sendCombatAction(4, 0)" class="team1-pokemon-card">
+                <div class="<%= Data.Teams[0].Trainer %>>">
+                    <h5 class="card-title"><%= Data.Teams[0].Pokemons[0].Name %></h5>
+                    <p id="team1-0" class="card-text">LP: <%= Data.Teams[0].Pokemons[0].CurrentLP %> / <%= Data.Teams[0].Pokemons[0].MaxLP %></p>
+                    <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[0].Type1 %>.png"/>
+                    <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[0].Type2 %>.png"/>
+                    <p class="card-text-mini"><img id="team1-0-statut" class="statut-box" src="<%= Data.Teams[0].Pokemons[0].Statut === 'None' ? '' : './assets/Statuts/' + Data.Teams[0].Pokemons[0].Statut + '.png' %>"></img></p>
+                    <ul>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[0].Moves[0].Type %>"><%= Data.Teams[0].Pokemons[0].Moves[0].Name %> <span class="PP_Capa_mini"><span id="0PPCapa0"><%= Data.Teams[0].Pokemons[0].PP[0] %></span>/<%= Data.Teams[0].Pokemons[0].Moves[0].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[0].Moves[0].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[0].Moves[1].Type %>"><%= Data.Teams[0].Pokemons[0].Moves[1].Name %> <span class="PP_Capa_mini"><span id="0PPCapa1"><%= Data.Teams[0].Pokemons[0].PP[1] %></span>/<%= Data.Teams[0].Pokemons[0].Moves[1].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[0].Moves[1].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[0].Moves[2].Type %>"><%= Data.Teams[0].Pokemons[0].Moves[2].Name %> <span class="PP_Capa_mini"><span id="0PPCapa2"><%= Data.Teams[0].Pokemons[0].PP[2] %></span>/<%= Data.Teams[0].Pokemons[0].Moves[2].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[0].Moves[2].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[0].Moves[3].Type %>"><%= Data.Teams[0].Pokemons[0].Moves[3].Name %> <span class="PP_Capa_mini"><span id="0PPCapa3"><%= Data.Teams[0].Pokemons[0].PP[3] %></span>/<%= Data.Teams[0].Pokemons[0].Moves[3].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[0].Moves[3].Cat %>.png"/></div></li>
+                    </ul>
+                </div>
+            </button>
+            <button onclick="sendCombatAction(4, 1)" class="team1-pokemon-card">
+                <div class="<%= Data.Teams[0].Trainer %>>">
+                    <h5 class="card-title"><%= Data.Teams[0].Pokemons[1].Name %></h5>
+                    <p id="team1-1" class="card-text">LP: <%= Data.Teams[0].Pokemons[1].CurrentLP %> / <%= Data.Teams[0].Pokemons[1].MaxLP %></p>
+                    <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[1].Type1 %>.png"/>
+                    <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[1].Type2 %>.png"/>
+                    <p class="card-text-mini"><img id="team1-1-statut" class="statut-box" src="<%= Data.Teams[0].Pokemons[1].Statut === 'None' ? '' : './assets/Statuts/' + Data.Teams[0].Pokemons[1].Statut + '.png' %>"></img></p>
+                    <ul>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[1].Moves[0].Type %>"><%= Data.Teams[0].Pokemons[1].Moves[0].Name %> <span class="PP_Capa_mini"><span id="1PPCapa0"><%= Data.Teams[0].Pokemons[1].PP[0] %></span>/<%= Data.Teams[0].Pokemons[1].Moves[0].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[1].Moves[0].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[1].Moves[1].Type %>"><%= Data.Teams[0].Pokemons[1].Moves[1].Name %> <span class="PP_Capa_mini"><span id="1PPCapa1"><%= Data.Teams[0].Pokemons[1].PP[1] %></span>/<%= Data.Teams[0].Pokemons[1].Moves[1].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[1].Moves[1].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[1].Moves[2].Type %>"><%= Data.Teams[0].Pokemons[1].Moves[2].Name %> <span class="PP_Capa_mini"><span id="1PPCapa2"><%= Data.Teams[0].Pokemons[1].PP[2] %></span>/<%= Data.Teams[0].Pokemons[1].Moves[2].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[1].Moves[2].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[1].Moves[3].Type %>"><%= Data.Teams[0].Pokemons[1].Moves[3].Name %> <span class="PP_Capa_mini"><span id="1PPCapa3"><%= Data.Teams[0].Pokemons[1].PP[3] %></span>/<%= Data.Teams[0].Pokemons[1].Moves[3].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[1].Moves[3].Cat %>.png"/></div></li>
+                    </ul>
+                </div>
+            </button>
+            <button onclick="sendCombatAction(4, 2)" class="team1-pokemon-card">
+                <div class="<%= Data.Teams[0].Trainer %>>">
+                    <h5 class="card-title"><%= Data.Teams[0].Pokemons[2].Name %></h5>
+                    <p id="team1-2" class="card-text">LP: <%= Data.Teams[0].Pokemons[2].CurrentLP %> / <%= Data.Teams[0].Pokemons[2].MaxLP %></p>
+                    <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[2].Type1 %>.png"/>
+                    <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[2].Type2 %>.png"/>
+                    <p class="card-text-mini"><img id="team1-2-statut" class="statut-box" src="<%= Data.Teams[0].Pokemons[1].Statut === 'None' ? '' : './assets/Statuts/' + Data.Teams[0].Pokemons[1].Statut + '.png' %>"></img></p>
+                    <ul>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[2].Moves[0].Type %>"><%= Data.Teams[0].Pokemons[2].Moves[0].Name %> <span class="PP_Capa_mini"><span id="2PPCapa0"><%= Data.Teams[0].Pokemons[2].PP[0] %></span>/<%= Data.Teams[0].Pokemons[2].Moves[0].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[2].Moves[0].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[2].Moves[1].Type %>"><%= Data.Teams[0].Pokemons[2].Moves[1].Name %> <span class="PP_Capa_mini"><span id="2PPCapa1"><%= Data.Teams[0].Pokemons[2].PP[1] %></span>/<%= Data.Teams[0].Pokemons[2].Moves[1].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[2].Moves[1].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[2].Moves[2].Type %>"><%= Data.Teams[0].Pokemons[2].Moves[2].Name %> <span class="PP_Capa_mini"><span id="2PPCapa2"><%= Data.Teams[0].Pokemons[2].PP[2] %></span>/<%= Data.Teams[0].Pokemons[2].Moves[2].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[2].Moves[2].Cat %>.png"/></div></li>
+                        <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[2].Moves[3].Type %>"><%= Data.Teams[0].Pokemons[2].Moves[3].Name %> <span class="PP_Capa_mini"><span id="2PPCapa3"><%= Data.Teams[0].Pokemons[2].PP[3] %></span>/<%= Data.Teams[0].Pokemons[2].Moves[3].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[2].Moves[3].Cat %>.png"/></div></li>
+                    </ul>
+                </div>
+            </button>
+        </div>
+        <div id="text-zone" class="flex-bottom-child">
+            <!-- <%= Data.TextArea %> -->
+            <% const splitText = Data.TextArea.split('<br>') %>
+            <% splitText.forEach(line => { %>
+                <%= line %><br>
+            <% }) %>
+        </div>
+    </div>
+    <script>
+        function sendCombatAction(choice1, indexNewPokemon1 = 0) {
+            fetch('/api/combat-action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice1,indexNewPokemon1 })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Option 1: Reload the page to get updated game state
+                location.reload();
+                // Option 2: Update only the relevant DOM parts using data.Data
+            });
+        }
+    </script>
+</body>
+</html>

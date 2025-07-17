@@ -1,0 +1,334 @@
+@font-face {
+    font-family: "myFirstFont";
+    src: url("Pokemon Classic.ttf");
+}
+
+*,
+body,
+ul, li,
+input[type=button]
+{
+    font-family: "myFirstFont";
+}
+
+progress[value] {
+    --w: 250px; /* the width 75%*/
+    --color:  /* the progress color */
+      linear-gradient(#fff8,#fff0),
+      /* IF CurrentLP < 25% "red" */
+      linear-gradient(red    0 0) 0 /calc(var(--w)*.25 - 100%) 1px,
+      /* IF CurrentLP < 50% "red" */
+      linear-gradient(orange 0 0) 0 /calc(var(--w)*.5 - 100%) 1px,
+      /* else "green" */
+      rgb(0, 155, 0);
+    --background: lightgrey; /* the background color */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    width: var(--w);
+    border-radius: 10em;
+    background: var(--background);
+  }
+  progress[value]::-webkit-progress-bar {
+    border-radius: 10em;
+    background: var(--background);
+  }
+  progress[value]::-webkit-progress-value {
+    border-radius: 10em;
+    background: var(--color);
+  }
+  progress[value]::-moz-progress-bar {
+    border-radius: 10em;
+    background: var(--color);
+  }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    padding-left: 1%;
+    border-radius: 15px;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+} 
+
+.pokemons-affichage-haut {
+    border: 2px solid;
+}
+
+.pokemon-infos {
+    font-size: 20px;
+    flex: 1;
+}
+
+.pokemon-image {
+    flex: 1;
+    height: 325px;
+    max-width: 350px;
+    margin-right: 1%;
+}
+
+li {
+    margin-bottom: 5px;
+    font-size: 8px;
+}
+
+.list_Capa {
+    margin-bottom: 8px;
+}
+
+.capa {
+    width: 350px;
+    padding: 10px 10px;
+    text-align: left;
+    border-radius: 15px;
+    border: none;
+}
+
+.capa_mini {
+    width: 90%;
+    padding: 10px 10px;
+    text-align: left;
+    border-radius: 15px;
+    border: none;
+}
+
+.cat_Capa {
+    float: right;
+    width: 20px;
+    margin-top: 5px;
+}
+
+.cat_Capa_mini {
+    float: right;
+    width: 20px;
+}
+
+.PP_Capa {
+    text-align: end;
+    width: 22%;
+    float: right;
+    font-size: 12px;
+}
+
+.PP_Capa_mini {
+    text-align: end;
+    width: 20%;
+    float: right;
+}
+
+.card {
+    display: flex; /* Utiliser un affichage flex pour aligner horizontalement les éléments enfants */
+    align-items: center; /* Aligner verticalement les éléments enfants au centre */
+}
+
+.pokemon-infos {
+    flex: 1; /* Le contenu de cette div occupera l'espace disponible (largeur flexible) */
+}
+
+ul {
+    list-style-type: none; /* Retirer la puce */
+    padding-left: 0; /* Retirer le padding gauche si nécessaire */
+}
+
+.Team_Type {
+    width: 50%;
+}
+
+.pokeball {
+    width: 100px;
+}
+
+.card-text-mini {
+    height: 20px;
+}
+
+.statut-box {
+    width: 80px;
+}
+
+.team1-pokemon-card {
+    width: 32%;
+    border-radius: 15px;
+}
+
+#team2 {
+    float: right;
+}
+
+.flex-bottom-container {
+    display: flex;
+}
+
+.flex-bottom-child {
+    flex: 1;
+    padding-left: 0%;
+}
+
+.flex-bottom-child:first-child {
+    margin-right: 20px;
+} 
+
+#text-zone {
+    width: 390px;
+    border: 2px solid;
+    overflow: auto;
+    padding: 1em;
+    font-size: 15px;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 2%;
+    box-sizing: border-box;
+}
+
+.control-panel {
+    float: left;
+}
+
+#random {
+    background-color: #3DA224;
+    width: auto;
+    height: 100px;
+    padding: 10px 10px;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 15px;
+    border: none;
+    margin-left: 1%;
+}
+
+.clear {
+    clear: both;
+}
+
+#weather {
+    display: block;
+    width: 10%;
+    height: auto;
+    margin: auto;
+    margin-right: 20%;
+}
+
+
+button {
+    background: none;
+    color: inherit;
+    outline: none;
+    box-shadow: none;
+    box-shadow: 0 5px #999;
+}
+  
+  button:hover {
+    outline: auto;
+    outline-color: #000;
+}
+
+  .team1-pokemon-card:hover {
+    background-color: #cacaca;
+}
+  
+  button:active {
+    box-shadow: 0 1px #666;
+    transform: translateY(4px);
+  }
+
+
+.Steel {
+    background-color: #60A2B9;
+    color: #000;
+}
+
+.Combat {
+    background-color: #FF8100;
+    color: #000;
+}
+
+.Dragon {
+    background-color: #4F60E2;
+    color: #000;
+}
+
+.Water {
+    background-color: #2481EF;
+    color: #000;
+}
+
+.Electrick {
+    background-color: #FAC100;
+    color: #000;
+}
+
+.Fairy {
+    background-color: #EF70EF;
+    color: #000;
+}
+
+.Fire {
+    background-color: #E72324;
+    color: #000;
+}
+
+.Ice {
+    background-color: #3DD9FF;
+    color: #000;
+}
+
+.Bug {
+    background-color: #92A212;
+    color: #000;
+}
+
+.Normal {
+    background-color: #b0b0b0;
+    color: #000;
+}
+
+.Grass {
+    background-color: #3DA224;
+    color: #000;
+}
+
+.Poison {
+    background-color: #923FCC;
+    color: #000;
+}
+
+.Psy {
+    background-color: #EF3F7A;
+    color: #000;
+}
+
+.Rock {
+    background-color: #B0AA82;
+    color: #000;
+}
+
+.Ground {
+    background-color: #92501B;
+    color: #000;
+}
+
+.Ghost {
+    background-color: #703F70;
+    color: #fff;
+}
+
+.Dark {
+    background-color: #4F3F3D;
+    color: #fff;
+}
+
+.Fly {
+    background-color: #82BAEF;
+    color: #000;
+}
