@@ -4,6 +4,12 @@
 
 ## Available Scripts
 
+#### First Step
+
+To Download the libraries :
+
+`npm i`
+
 ### npm run start:dev
 
 Runs the app in the development mode.
