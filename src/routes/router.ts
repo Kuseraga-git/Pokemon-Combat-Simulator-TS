@@ -1,19 +1,12 @@
 import { Router } from "express";
-import { init, reset } from "../handlers/users";
+import { FinishGame, InitGame, ResetGame } from "../handlers/gameHandler";
 
 const router = Router();
 
-// /api/users
-router.get('/', init)
-// router.get('/', test)
+router.get('/', InitGame)
 
-router.get('/reset', reset)
+router.get('/reset', ResetGame)
 
-// /api/users/id
-// router.get('/:id', getUserById)
-
-// // /api/users
-// router.post('/', createUser)
-
+router.get('/end', FinishGame)
 
 export default router;

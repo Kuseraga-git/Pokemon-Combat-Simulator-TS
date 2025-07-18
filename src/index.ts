@@ -2,7 +2,7 @@ import express from 'express';
 import router from './routes/router';
 import path from 'path';
 import bodyParser from 'body-parser'
-import { CombatActionHandler } from './handlers/users';
+import { CombatActionHandler } from './handlers/gameHandler';
 
 const app = express();
 
@@ -16,6 +16,7 @@ app.use(express.json())
 app.use(express.static(__dirname))
 
 app.use('/', router)
+app.use('/end', router)
 app.post("/api/combat-action", CombatActionHandler)
 
 const PORT = 3000;
