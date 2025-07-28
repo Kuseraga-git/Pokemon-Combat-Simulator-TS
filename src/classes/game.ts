@@ -1,3 +1,4 @@
+import { GameState } from "../datas/gameState"
 import { Weather } from "../datas/weather"
 // import { DisplayPokemon2 } from "../gameplay/display"
 import { CanAttack } from "../gameplay/offense"
@@ -13,6 +14,7 @@ export class Game {
     private WeatherTurn : number = 0
     private RoundNB : number = 1
     private TextArea : string = ''
+    private GameState : GameState = GameState.GAME
 
     constructor() {
         this.Teams = []
@@ -50,13 +52,21 @@ export class Game {
         this.IndexPokemon2 = value
     }
 
+    GetGameState() : GameState {
+        return(this.GameState)
+    }
+
+    SetGameState(value : GameState) {
+        this.GameState = value
+    }
+
     NewTurn() {
         this.ResetTextArea()
         this.AppendTextArea(`Round n°${this.RoundNB}<br>`)
         this.RoundNB+=1;
     }
 
-    CombatAction(Choice1 : number, IndexNewPokemon1 : number = 0) {
+    CombatAction(Choice1 : number, IndexNewPokemon1 : number = 0) : GameState {
         let pokemon1 : Pokemon = this.Teams[0].GetPokemon(this.IndexPokemon1)
         let pokemon2 : Pokemon = this.Teams[1].GetPokemon(this.IndexPokemon2)
         const randValue : number = Math.floor(Math.random() * 4)
@@ -68,7 +78,7 @@ export class Game {
                     this.IndexPokemon1 = IndexNewPokemon1
                     pokemon1 = this.Teams[0].GetPokemon(IndexNewPokemon1)
                     pokemon1.PopInBattle(this)
-                } else {return}
+                } //else {return}
             } else {
                 if (this.Teams[0].GetPokemon(this.IndexPokemon1).GetKO() === false && IndexNewPokemon1 != this.IndexPokemon1) {
                     this.NewTurn()
@@ -79,7 +89,7 @@ export class Game {
                     if (CanAttack(this, pokemon2, pokemon2.GetMove(randValue), pokemon1, randValue) == true) {
                         pokemon2.UseMove(this, randValue, pokemon1)
                     }
-                } else {return}
+                } //else {return}
             }
         } else if (pokemon1.GetKO() === false && pokemon2.GetKO() === false) {
             this.NewTurn()
@@ -102,20 +112,28 @@ export class Game {
                     }
                 }
             }
-        } else {return}
+        } //else {return}
         EndRound(this, pokemon1, pokemon2)
         if (this.Teams[0].CheckTeamKO() && this.Teams[1].CheckTeamKO()) {
-            setTimeout(alert, 500, `Draw !!!`) // TODO Find a solution cause alert doesn't exist in TS
+            // setTimeout(alert, 500, `Draw !!!`) // TODO Find a solution cause alert doesn't exist in TS
+            this.SetGameState(GameState.DRAW)
+            // return(GameState.DRAW)
         } else if (pokemon2.GetKO()) {
             if (this.Teams[1].CheckTeamKO() === false) {
                 this.IndexPokemon2 += 1
                 pokemon2 = this.Teams[1].GetPokemon(this.IndexPokemon2)
+                // return(GameState.GAME)
             } else {
-                setTimeout(alert, 500, `${this.Teams[0].GetTrainer()} Win ! !!!`); // TODO Find a solution cause alert doesn't exist in TS
+                // return(GameState.WIN1)
+                this.SetGameState(GameState.WIN1)
+                // setTimeout(alert, 500, `${this.Teams[0].GetTrainer()} Win ! !!!`); // TODO Find a solution cause alert doesn't exist in TS
             }
         } else if (this.Teams[0].CheckTeamKO()) {
-            setTimeout(alert, 500, `${this.Teams[1].GetTrainer()} Win ! !!!`); // TODO Find a solution cause alert doesn't exist in TS
+            // return(GameState.WIN2)
+            this.SetGameState(GameState.WIN2)
+            // setTimeout(alert, 500, `${this.Teams[1].GetTrainer()} Win ! !!!`); // TODO Find a solution cause alert doesn't exist in TS
         }
+        return(this.GetGameState())
     }
 
     GetWeather() : Weather {

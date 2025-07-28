@@ -6,7 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> WIndex = <%= WinnerIndex %></h1>
+    <% if (WinnerIndex == -1) { %>
+        <h1>DRAW !!!</h1>
+    <% } else { %>
+        <h1> WIndex = Team <%= WinnerIndex +1 %></h1>
+    <% } %>
     <h1> WTeam = <%= WinnerTeam %></h1>
     <h1> LTeam = <%= LoserTeam %></h1>
 </body>

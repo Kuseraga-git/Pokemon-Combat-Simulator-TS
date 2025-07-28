@@ -1,12 +1,21 @@
 import { Request, Response } from "express-serve-static-core";
 import { Teams } from "../classes/teams";
 import { Game } from "../classes/game";
+import { GameState } from "../datas/gameState";
 
 let gameInstance : Game = new Game()
 
 export function CombatActionHandler(Request: Request, Response: Response) {
-    gameInstance.CombatAction(Request.body.choice1, Request.body.indexNewPokemon1);
-    Response.json({ success: true, Data: gameInstance})
+    if (gameInstance.CombatAction(Request.body.choice1, Request.body.indexNewPokemon1) != GameState.GAME) {
+        Response.json({ 
+            success: true, 
+            redirect: '/end',
+            GameState: gameInstance.GetGameState(),
+            Data: gameInstance
+        });
+    } else {
+        Response.json({ success: true, Data: gameInstance})
+    }
 }
 
 export function InitGame(Request : Request, Response : Response) {
@@ -29,8 +38,8 @@ export function ResetGame(Request : Request, Response : Response) {
 }
 
 export function FinishGame(Request : Request, Response : Response) {
-    let WinnerIndex : number = Request.body.WinnerIndex
-    let WinnerTeam : Teams = Request.body.WinnerTeam
-    let LoserTeam : Teams = Request.body.LoserTeam
-    Response.render("gameEnd", {WinnerIndex : WinnerIndex, WinnerTeam : WinnerTeam, LoserTeam : LoserTeam})
+    let WinnerIndex : number = gameInstance.GetGameState() == GameState.WIN1 ? 0 : gameInstance.GetGameState() == GameState.WIN2 ? 1 : -1
+    let WinnerTeam : Teams = gameInstance.GetGameState() == GameState.WIN2 ? gameInstance.GetTeams()[1] : gameInstance.GetTeams()[0]
+    let LoserTeam : Teams = gameInstance.GetGameState() == GameState.WIN2 ? gameInstance.GetTeams()[0] : gameInstance.GetTeams()[1]
+    Response.render("gameEnd", {WinnerIndex : WinnerIndex, WinnerTeam : WinnerTeam, LoserTeam : LoserTeam, Data: gameInstance})
 }
