@@ -78,7 +78,7 @@ export class Game {
                     this.IndexPokemon1 = IndexNewPokemon1
                     pokemon1 = this.Teams[0].GetPokemon(IndexNewPokemon1)
                     pokemon1.PopInBattle(this)
-                } //else {return}
+                }
             } else {
                 if (this.Teams[0].GetPokemon(this.IndexPokemon1).GetKO() === false && IndexNewPokemon1 != this.IndexPokemon1) {
                     this.NewTurn()
@@ -89,7 +89,7 @@ export class Game {
                     if (CanAttack(this, pokemon2, pokemon2.GetMove(randValue), pokemon1, randValue) == true) {
                         pokemon2.UseMove(this, randValue, pokemon1)
                     }
-                } //else {return}
+                }
             }
         } else if (pokemon1.GetKO() === false && pokemon2.GetKO() === false) {
             this.NewTurn()
@@ -112,26 +112,19 @@ export class Game {
                     }
                 }
             }
-        } //else {return}
+        }
         EndRound(this, pokemon1, pokemon2)
         if (this.Teams[0].CheckTeamKO() && this.Teams[1].CheckTeamKO()) {
-            // setTimeout(alert, 500, `Draw !!!`) // TODO Find a solution cause alert doesn't exist in TS
             this.SetGameState(GameState.DRAW)
-            // return(GameState.DRAW)
         } else if (pokemon2.GetKO()) {
             if (this.Teams[1].CheckTeamKO() === false) {
                 this.IndexPokemon2 += 1
                 pokemon2 = this.Teams[1].GetPokemon(this.IndexPokemon2)
-                // return(GameState.GAME)
             } else {
-                // return(GameState.WIN1)
                 this.SetGameState(GameState.WIN1)
-                // setTimeout(alert, 500, `${this.Teams[0].GetTrainer()} Win ! !!!`); // TODO Find a solution cause alert doesn't exist in TS
             }
         } else if (this.Teams[0].CheckTeamKO()) {
-            // return(GameState.WIN2)
             this.SetGameState(GameState.WIN2)
-            // setTimeout(alert, 500, `${this.Teams[1].GetTrainer()} Win ! !!!`); // TODO Find a solution cause alert doesn't exist in TS
         }
         return(this.GetGameState())
     }
