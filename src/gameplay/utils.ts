@@ -39,6 +39,4 @@ export function EndRound(GameInstance : Game, Pokemon1 : Pokemon, Pokemon2 : Pok
     WeatherDamage(GameInstance, Pokemon1, Pokemon2)
     Pokemon1.FormatKO(GameInstance)
     Pokemon2.FormatKO(GameInstance)
-    // GameInstance.WriteInTextArea(Response)
-    // UpdateLPPokemons(Pokemon1, GameInstance.GetIndexPokemon1(), Pokemon2, GameInstance.GetTeams()[1])
 }
