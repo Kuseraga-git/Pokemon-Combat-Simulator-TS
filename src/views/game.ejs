@@ -38,26 +38,13 @@
     <div class="container">
         <div class="control-panel">
             <ul id="capa-list1">
-                <li class="list_Capa">
-                    <button onclick="sendCombatAction(0)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[0] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].PP %></span>
-                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[0].Cat %>.png"/>
-                    </button>
-                </li>
-                <li class="list_Capa">
-                    <button onclick="sendCombatAction(1)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[1] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].PP %></span>
-                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[1].Cat %>.png"/>
-                    </button>
-                </li>
-                <li class="list_Capa">
-                    <button onclick="sendCombatAction(2)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[2] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].PP %></span>
-                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[2].Cat %>.png"/>
-                    </button>
-                </li>
-                <li class="list_Capa">
-                    <button onclick="sendCombatAction(3)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[3] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].PP %></span>
-                        <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[3].Cat %>.png"/>
-                    </button>
-                </li>
+                <% for (let i = 0; i < Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves.length; i++) { %>
+                    <li class="list_Capa">
+                        <button onclick="sendCombatAction(0)" class="capa <%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[i].Type %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[i].Name %> <span class="PP_Capa"><span id="PPCapa<%= Data.IndexPokemon1 %>"><%= Data.Teams[0].Pokemons[Data.IndexPokemon1].PP[i] %></span>/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[i].PP %></span>
+                            <img class="cat_Capa" src="./assets/Utils/<%= Data.Teams[0].Pokemons[Data.IndexPokemon1].Moves[i].Cat %>.png"/>
+                        </button>
+                    </li>
+                <% } %>
             </ul>
         </div>
         <button onclick="sendCombatAction(Math.floor(Math.random() * 4))" id="random">Random</button>
@@ -71,7 +58,7 @@
     <div class="clear flex-bottom-container">
         <div id="team1" class="flex-bottom-child">
             <% for (let i = 0; i < Data.Teams[0].Pokemons.length; i++) { %>
-                <button onclick="sendCombatAction(4, 0)" class="team1-pokemon-card">
+                <button onclick="sendCombatAction(4, <%= i %>)" class="team1-pokemon-card">
                     <div class="<%= Data.Teams[0].Trainer %>>">
                         <h5 class="card-title"><%= Data.Teams[0].Pokemons[i].Name %></h5>
                         <p id="team1-0" class="card-text">LP: <%= Data.Teams[0].Pokemons[i].CurrentLP %> / <%= Data.Teams[0].Pokemons[0].MaxLP %></p>
@@ -79,17 +66,15 @@
                         <img class="Team_Type" src="./assets/Types/Type_<%= Data.Teams[0].Pokemons[i].Type2 %>.png"/>
                         <p class="card-text-mini"><img id="team1-0-statut" class="statut-box" src="<%= Data.Teams[0].Pokemons[i].Statut === 'None' ? '' : './assets/Statuts/' + Data.Teams[0].Pokemons[0].Statut + '.png' %>"></img></p>
                         <ul>
-                            <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[i].Moves[0].Type %>"><%= Data.Teams[0].Pokemons[i].Moves[0].Name %> <span class="PP_Capa_mini"><span id="0PPCapa0"><%= Data.Teams[0].Pokemons[i].PP[0] %></span>/<%= Data.Teams[0].Pokemons[i].Moves[0].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[i].Moves[0].Cat %>.png"/></div></li>
-                            <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[i].Moves[1].Type %>"><%= Data.Teams[0].Pokemons[i].Moves[1].Name %> <span class="PP_Capa_mini"><span id="0PPCapa1"><%= Data.Teams[0].Pokemons[i].PP[1] %></span>/<%= Data.Teams[0].Pokemons[i].Moves[1].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[i].Moves[1].Cat %>.png"/></div></li>
-                            <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[i].Moves[2].Type %>"><%= Data.Teams[0].Pokemons[i].Moves[2].Name %> <span class="PP_Capa_mini"><span id="0PPCapa2"><%= Data.Teams[0].Pokemons[i].PP[2] %></span>/<%= Data.Teams[0].Pokemons[i].Moves[2].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[i].Moves[2].Cat %>.png"/></div></li>
-                            <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[i].Moves[3].Type %>"><%= Data.Teams[0].Pokemons[i].Moves[3].Name %> <span class="PP_Capa_mini"><span id="0PPCapa3"><%= Data.Teams[0].Pokemons[i].PP[3] %></span>/<%= Data.Teams[0].Pokemons[i].Moves[3].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[i].Moves[3].Cat %>.png"/></div></li>
+                            <% for (let y = 0; y < Data.Teams[0].Pokemons[i].Moves.length; y++) { %>
+                                <li class="list_Capa_mini"><div class="capa_mini <%= Data.Teams[0].Pokemons[i].Moves[y].Type %>"><%= Data.Teams[0].Pokemons[i].Moves[0].Name %> <span class="PP_Capa_mini"><span id="iPPCapay"><%= Data.Teams[0].Pokemons[i].PP[y] %></span>/<%= Data.Teams[0].Pokemons[i].Moves[y].PP %></span><img class="cat_Capa_mini" src="./assets/Utils/<%= Data.Teams[0].Pokemons[i].Moves[y].Cat %>.png"/></div></li>
+                            <% } %>
                         </ul>
                     </div>
                 </button>
             <% } %>
         </div>
         <div id="text-zone" class="flex-bottom-child">
-            <!-- <%= Data.TextArea %> -->
             <% const splitText = Data.TextArea.split('<br>') %>
             <% splitText.forEach(line => { %>
                 <%= line %><br>
